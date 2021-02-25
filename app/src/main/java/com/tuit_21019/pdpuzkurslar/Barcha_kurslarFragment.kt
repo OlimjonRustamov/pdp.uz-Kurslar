@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-//komment qo'shdim
+
 
 class Barcha_kurslarFragment : Fragment() {
     private var param1: String? = null
