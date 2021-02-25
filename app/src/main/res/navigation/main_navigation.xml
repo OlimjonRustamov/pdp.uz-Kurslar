@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/startingFragment">
+
+    <fragment
+        android:id="@+id/startingFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.StartingFragment"
+        android:label="PDP KURSLAR"
+        tools:layout="@layout/fragment_starting" >
+        <action
+            android:id="@+id/action_startingFragment_to_barcha_kurslarFragment"
+            app:destination="@id/barcha_kurslarFragment" />
+        <action
+            android:id="@+id/action_startingFragment_to_guruhlarFragment"
+            app:destination="@id/guruhlarFragment" />
+        <action
+            android:id="@+id/action_startingFragment_to_mentorlarFragment"
+            app:destination="@id/mentorlarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barcha_kurslarFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.Barcha_kurslarFragment"
+        android:label="Barcha kurslar"
+        tools:layout="@layout/fragment_barcha_kurslar" />
+    <fragment
+        android:id="@+id/guruhlarFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.GuruhlarFragment"
+        android:label="fragment_guruhlar"
+        tools:layout="@layout/fragment_guruhlar" />
+    <fragment
+        android:id="@+id/mentorlarFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.MentorlarFragment"
+        android:label="fragment_mentorlar"
+        tools:layout="@layout/fragment_mentorlar" />
+</navigation>
