@@ -52,6 +52,8 @@ class Barcha_kurslarFragment : Fragment() {
         root.kurslar_recyclerview.adapter = kurslarAdapter
         root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
 
+        setMyItemClick()
+
         return root
     }
 
@@ -78,34 +80,50 @@ class Barcha_kurslarFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        root.toolbar.setOnMenuItemClickListener(object : androidx.appcompat.widget.Toolbar.OnMenuItemClickListener {
-            override fun onMenuItemClick(item: MenuItem?): Boolean {
-                if (item?.itemId == R.id.add_menu_btn) {
-                    val dialog = AlertDialog.Builder(root.context)
-                    val view=LayoutInflater.from(root.context).inflate(R.layout.add_kurs_dialog,null,false)
-                    dialog.setView(view)
-                    dialog.setPositiveButton("Qo'shish", object : DialogInterface.OnClickListener {
-                        override fun onClick(dialog: DialogInterface?, which: Int) {
-                            val kurs_nomi_et=view.add_kurs_dialog_et.text.toString()
+        root.toolbar.setOnMenuItemClickListener { item ->
+            if (item?.itemId == R.id.add_menu_btn) {
+                val dialog = AlertDialog.Builder(root.context)
+                val view = LayoutInflater.from(root.context).inflate(R.layout.add_kurs_dialog, null, false)
+                dialog.setView(view)
+                dialog.setPositiveButton("Qo'shish", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        val kurs_nomi_et = view.add_kurs_dialog_et.text.toString()
+                        if (kurs_nomi_et.trim() != "") {
                             db.insertKurs(Kurs(kurs_nomi_et))
                             dialog?.cancel()
                             Toast.makeText(root.context, "Muvaffaqiyatli qo'shildi!", Toast.LENGTH_LONG).show()
                             kurslarList.add(Kurs(kurs_nomi_et))
-                            kurslarAdapter.notifyItemInserted(kurslarList.size-1)
-                            kurslarAdapter.notifyItemRangeChanged(kurslarList.size-1,kurslarList.size)
+                            kurslarAdapter.notifyItemInserted(kurslarList.size - 1)
+                            kurslarAdapter.notifyItemRangeChanged(kurslarList.size - 1, kurslarList.size)
+                        } else {
+                            Toast.makeText(root.context, "Kurs nomi bo'sh bo'lishi mumkin emas!", Toast.LENGTH_LONG).show()
                         }
-                    })
-                    dialog.setNegativeButton("Yopish", object : DialogInterface.OnClickListener {
-                        override fun onClick(dialog: DialogInterface?, which: Int) {
-                            dialog?.cancel()
-                        }
-                    })
-                    dialog.show()
-                }
-                return true
+                    }
+                })
+                dialog.setNegativeButton("Yopish", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        dialog?.cancel()
+                    }
+                })
+                dialog.show()
             }
-
-        })
+            true
+        }
     }
 
+    private fun setMyItemClick() {
+        kurslarAdapter.kursItemClick=object : KurslarAdapter.KursItemClick {
+            override fun kursitemClick(kurs:Kurs) {
+                val bundle = Bundle()
+                bundle.putSerializable("kurs",kurs)
+                if (param1 == "mentorlar") {
+                    findNavController().navigate(R.id.mentorlarFragment,bundle)
+                } else if (param1 == "guruhlar") {
+                    findNavController().navigate(R.id.guruhlarFragment,bundle)
+                } else if (param1 == "kurs_haqida") {
+                    findNavController().navigate(R.id.kurshaqidaFragment,bundle)
+                }
+            }
+        }
+    }
 }

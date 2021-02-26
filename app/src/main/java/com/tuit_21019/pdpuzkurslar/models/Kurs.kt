@@ -1,6 +1,8 @@
 package com.tuit_21019.pdpuzkurslar.models
 
-class Kurs {
+import java.io.Serializable
+
+class Kurs:Serializable {
     var id: Int? = null
     var kurs_nomi: String? = null
 

@@ -5,21 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.tuit_21019.pdpuzkurslar.models.Kurs
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
+private const val ARG_PARAM1 = "kurs"
+//kursni olib keladi
+//keyinchalik id kerak
 class GuruhlarFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+    private var param1: Kurs? = null
 
     lateinit var root:View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param1 = it.getSerializable(ARG_PARAM1) as Kurs
         }
     }
 
@@ -33,11 +32,10 @@ class GuruhlarFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Kurs) =
             GuruhlarFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putSerializable(ARG_PARAM1, param1)
                 }
             }
     }

@@ -9,9 +9,18 @@ import com.tuit_21019.pdpuzkurslar.models.Kurs
 import kotlinx.android.synthetic.main.item_kurslar.view.*
 
 class KurslarAdapter(var kurslarList: ArrayList<Kurs>) : RecyclerView.Adapter<KurslarAdapter.Vh>() {
+    var kursItemClick: KursItemClick? = null
+
+
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun myBind(str:String) {
-            itemView.item_kurslar_title.text=str
+        fun myBind(kurs:Kurs) {
+            itemView.item_kurslar_title.text = kurs.kurs_nomi
+
+            itemView.kurslar_item_cardview.setOnClickListener {
+                if (kursItemClick != null) {
+                    kursItemClick!!.kursitemClick(kurs)
+                }
+            }
         }
     }
 
@@ -20,9 +29,13 @@ class KurslarAdapter(var kurslarList: ArrayList<Kurs>) : RecyclerView.Adapter<Ku
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.myBind(kurslarList[position].kurs_nomi!!)
+        holder.myBind(kurslarList[position])
     }
 
     override fun getItemCount(): Int =kurslarList.size
+
+    interface KursItemClick{
+        fun kursitemClick(kurs: Kurs)
+    }
 
 }
