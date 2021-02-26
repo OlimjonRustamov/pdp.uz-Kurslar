@@ -14,7 +14,7 @@ import com.tuit_21019.pdpuzkurslar.R
 import kotlinx.android.synthetic.main.item_spinner.view.*
 
 
-class AddGroupSpinnerAdapter :BaseAdapter() {
+class AddGroupSpinnerAdapter2 :BaseAdapter() {
 
     private var list:ArrayList<String>?=null
     private var context:Context?=null
@@ -45,9 +45,8 @@ class AddGroupSpinnerAdapter :BaseAdapter() {
         if (position == 0) {
             view.spinner_tv.setTextColor(Color.GRAY)
         }
-
+        
         view.spinner_tv.text=list!![position]
-
         return view
     }
 

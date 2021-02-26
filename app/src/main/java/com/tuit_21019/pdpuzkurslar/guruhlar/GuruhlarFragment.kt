@@ -47,6 +47,7 @@ class GuruhlarFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_guruhlar, container, false)
         root.toolbar.menu.getItem(0).isVisible = false
 
+
         loadData()
         loadAdapters()
         addClick()
@@ -58,8 +59,8 @@ class GuruhlarFragment : Fragment() {
         root.toolbar.setOnMenuItemClickListener { it->
             if (it.itemId == R.id.add_menu_btn) {
                 val bundle = Bundle()
-                bundle.putInt("kusID", param1!!.id!!)
-                findNavController().navigate(R.id.addGroup)
+                bundle.putInt("kursID", param1!!.id!!)
+                findNavController().navigate(R.id.addGroup,bundle)
             }
             true
         }

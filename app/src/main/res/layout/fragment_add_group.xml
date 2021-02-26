@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@id/appbarlayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_kurs_dialog_et"
+            android:id="@+id/add_group_course_name"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="0dp"
