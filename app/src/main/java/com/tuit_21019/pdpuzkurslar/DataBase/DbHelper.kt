@@ -150,6 +150,27 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "pdpuz_kurslar", nu
         return groupByIdList
     }
 
+    override fun getAllGroupByStatus(ochilganligi: String): ArrayList<Guruh> {
+        val db=this.readableDatabase
+        val groupByStatus = ArrayList<Guruh>()
+        val cursor = db.rawQuery("select * from guruhlar where ochilganligi=:ochilganligi", null)
+        if (cursor.moveToFirst()) {
+            do {
+                groupByStatus.add(Guruh(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getString(5)
+                ))
+            }while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return groupByStatus
+    }
+
     override fun getAllStudentsByGroupId(guruh_id: Int): ArrayList<Talaba> {
         val db=this.readableDatabase
         val studentsByGroupId = ArrayList<Talaba>()
