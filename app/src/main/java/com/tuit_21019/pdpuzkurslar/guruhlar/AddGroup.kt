@@ -14,6 +14,8 @@ import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter2
 import com.tuit_21019.pdpuzkurslar.models.Guruh
 import kotlinx.android.synthetic.main.fragment_add_group.view.*
+import kotlinx.android.synthetic.main.fragment_add_group.view.toolbar
+import kotlinx.android.synthetic.main.fragment_guruhlar.view.*
 
 private const val ARG_PARAM1 = "kursID"
 private const val ARG_PARAM2 = "param2"
@@ -46,6 +48,8 @@ class AddGroup : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.fragment_add_group, container, false)
+
+        toolbarConfiguration()
         loadData()
         loadMentors()
         loadTime()
@@ -53,6 +57,13 @@ class AddGroup : Fragment() {
 
 
         return root
+    }
+
+    private fun toolbarConfiguration() {
+        root.toolbar.menu.getItem(0).isVisible = false
+        root.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun onSaveClick() {

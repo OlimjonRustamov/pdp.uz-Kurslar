@@ -45,14 +45,22 @@ class GuruhlarFragment : Fragment() {
     ): View {
         db = DbHelper(this.context!!)
         root = inflater.inflate(R.layout.fragment_guruhlar, container, false)
+        root.toolbar.title=param1!!.kurs_nomi
         root.toolbar.menu.getItem(0).isVisible = false
 
 
         loadData()
         loadAdapters()
         addClick()
+        backBtnClick()
 
         return root
+    }
+
+    private fun backBtnClick() {
+        root.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun addClick() {
@@ -68,7 +76,7 @@ class GuruhlarFragment : Fragment() {
     }
 
     private fun loadAdapters() {
-        adapter = GroupViewPagerAdapter(groupList!!, childFragmentManager)
+        adapter = GroupViewPagerAdapter(groupList!!, childFragmentManager, param1?.id!!)
         root.group_view_pager.adapter = adapter
         root.tab_layout.setupWithViewPager(root.group_view_pager)
         setTabs()

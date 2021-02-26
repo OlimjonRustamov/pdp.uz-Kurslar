@@ -1,5 +1,6 @@
 package com.tuit_21019.pdpuzkurslar.guruhlar.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,10 @@ class GroupByStatusAdapter(var groupList: ArrayList<Guruh>, var studentCountList
     private var onDeleteClick: OnDeleteClick? = null
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun onBind(guruh: Guruh, studentCount: Int, position: Int) {
             itemView.group_name.text = guruh.guruh_nomi
-            itemView.group_student_count.text = studentCount.toString()
+            itemView.group_student_count.text = "O'quvchilar soni: ${studentCount.toString()}"
 
             itemView.group_view.setOnClickListener {
                 if (onViewClick != null) {
@@ -27,8 +29,8 @@ class GroupByStatusAdapter(var groupList: ArrayList<Guruh>, var studentCountList
             }
 
             itemView.group_edit.setOnClickListener {
-                if (onViewClick != null) {
-                    onViewClick!!.onClick(guruh, position)
+                if (onEditClick != null) {
+                    onEditClick!!.onClick(guruh, position)
                 }
             }
 

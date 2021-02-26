@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            app:title="Android Development"
+            app:title="Yangi guruh qo'shish"
             app:titleTextColor="@android:color/white"
             android:id="@+id/toolbar"
             app:navigationIcon="?attr/homeAsUpIndicator"

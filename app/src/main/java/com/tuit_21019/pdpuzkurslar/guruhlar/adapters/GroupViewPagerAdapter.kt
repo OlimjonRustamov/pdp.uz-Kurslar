@@ -8,7 +8,7 @@ import com.tuit_21019.pdpuzkurslar.models.Guruh
 
 class GroupViewPagerAdapter(
     var groupList: ArrayList<Guruh>,
-    fragmentManager: FragmentManager
+    fragmentManager: FragmentManager, var kursID:Int
 ) :
     FragmentStatePagerAdapter(
         fragmentManager,
@@ -18,6 +18,6 @@ class GroupViewPagerAdapter(
     override fun getCount(): Int = 2
 
     override fun getItem(position: Int): Fragment {
-        return GroupByStatusFragment.newInstance(position + 1)
+        return GroupByStatusFragment.newInstance(position + 1,kursID)
     }
 }
