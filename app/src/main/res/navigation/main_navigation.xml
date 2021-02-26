@@ -13,18 +13,22 @@
         <action
             android:id="@+id/action_startingFragment_to_barcha_kurslarFragment"
             app:destination="@id/barcha_kurslarFragment" />
-        <action
-            android:id="@+id/action_startingFragment_to_guruhlarFragment"
-            app:destination="@id/guruhlarFragment" />
-        <action
-            android:id="@+id/action_startingFragment_to_mentorlarFragment"
-            app:destination="@id/mentorlarFragment" />
     </fragment>
     <fragment
         android:id="@+id/barcha_kurslarFragment"
         android:name="com.tuit_21019.pdpuzkurslar.Barcha_kurslarFragment"
         android:label="Barcha kurslar"
-        tools:layout="@layout/fragment_barcha_kurslar" />
+        tools:layout="@layout/fragment_barcha_kurslar" >
+        <action
+            android:id="@+id/action_barcha_kurslarFragment_to_mentorlarFragment"
+            app:destination="@id/mentorlarFragment" />
+        <action
+            android:id="@+id/action_barcha_kurslarFragment_to_guruhlarFragment"
+            app:destination="@id/guruhlarFragment" />
+        <action
+            android:id="@+id/action_barcha_kurslarFragment_to_kurshaqidaFragment"
+            app:destination="@id/kurshaqidaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/guruhlarFragment"
         android:name="com.tuit_21019.pdpuzkurslar.GuruhlarFragment"
@@ -35,4 +39,9 @@
         android:name="com.tuit_21019.pdpuzkurslar.MentorlarFragment"
         android:label="fragment_mentorlar"
         tools:layout="@layout/fragment_mentorlar" />
+    <fragment
+        android:id="@+id/kurshaqidaFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.KurshaqidaFragment"
+        android:label="fragment_kurshaqida"
+        tools:layout="@layout/fragment_kurshaqida" />
 </navigation>

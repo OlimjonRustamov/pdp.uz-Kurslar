@@ -16,13 +16,11 @@ import com.tuit_21019.pdpuzkurslar.models.Kurs
 import kotlinx.android.synthetic.main.add_kurs_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.*
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "navigation"
 
 
 class Barcha_kurslarFragment : Fragment() {
     private var param1: String? = null
-    private var param2: String? = null
 
     lateinit var db:DbHelper
 
@@ -34,8 +32,6 @@ class Barcha_kurslarFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-
         }
     }
 
@@ -49,8 +45,34 @@ class Barcha_kurslarFragment : Fragment() {
 
         root = inflater.inflate(R.layout.fragment_barcha_kurslar, container, false)
 
-        root.toolbar.title="Barcha kurslar"
+        setToolbar()
+        kurslarList = db.getAllKurs()
 
+        kurslarAdapter=KurslarAdapter(kurslarList)
+        root.kurslar_recyclerview.adapter = kurslarAdapter
+        root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
+
+        return root
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String) =
+            Barcha_kurslarFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                }
+            }
+    }
+
+    private fun setToolbar() {
+        root.toolbar.title="Barcha kurslar"
+        if (param1 == "guruhlar") {
+            root.toolbar.menu.getItem(0).setVisible(false)
+        } else if (param1 == "mentorlar") {
+            root.toolbar.menu.getItem(0).setVisible(false)
+            //toolbar menuni to'g'rilash hammasida ham menu yoq ekan
+        }
 
         root.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -84,25 +106,6 @@ class Barcha_kurslarFragment : Fragment() {
             }
 
         })
-
-        kurslarList = db.getAllKurs()
-
-        kurslarAdapter=KurslarAdapter(kurslarList)
-        root.kurslar_recyclerview.adapter = kurslarAdapter
-        root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
-
-        return root
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Barcha_kurslarFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
 }

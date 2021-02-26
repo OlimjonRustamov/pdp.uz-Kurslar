@@ -55,14 +55,22 @@ class StartingFragment : Fragment() {
     }
 
     private fun btnsClick() {
+        //bu narsa barcha kurslar fragmentini qaysi bo'limdan oldin ochish uchun
+        //hamma bo'limlarda oldin kurslar ro'yxati chiqishi kk ekan. Shu uchun (shvabra qoyib ketdim patalokni ushlasin deb)
         root.mentorlar_cardview.setOnClickListener{
-            findNavController().navigate(R.id.mentorlarFragment)
+            val bundle = Bundle()
+            bundle.putString("navigation","mentorlar")
+            findNavController().navigate(R.id.barcha_kurslarFragment,bundle)
         }
         root.guruhlar_cardview.setOnClickListener{
-            findNavController().navigate(R.id.guruhlarFragment)
+            val bundle = Bundle()
+            bundle.putString("navigation","guruhlar")
+            findNavController().navigate(R.id.barcha_kurslarFragment,bundle)
         }
         root.kurslar_cardview.setOnClickListener {
-            findNavController().navigate(R.id.barcha_kurslarFragment)
+            val bundle = Bundle()
+            bundle.putString("navigation","kurs_haqida")
+            findNavController().navigate(R.id.barcha_kurslarFragment,bundle)
         }
     }
 }
