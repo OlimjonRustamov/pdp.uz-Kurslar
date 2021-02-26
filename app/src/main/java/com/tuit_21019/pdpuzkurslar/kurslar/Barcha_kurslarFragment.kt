@@ -95,11 +95,12 @@ class Barcha_kurslarFragment : Fragment() {
                 dialog.setPositiveButton("Qo'shish", object : DialogInterface.OnClickListener {
                     override fun onClick(dialog: DialogInterface?, which: Int) {
                         val kurs_nomi_et = view.add_kurs_dialog_et.text.toString()
-                        if (kurs_nomi_et.trim() != "") {
-                            db.insertKurs(Kurs(kurs_nomi_et))
+                        val kurs_haqida_et=view.add_kurs_dialog__description.text.toString()
+                        if (kurs_nomi_et.trim() != ""&&kurs_haqida_et.trim()!="") {
+                            val id=db.insertKurs(Kurs(kurs_nomi_et,kurs_haqida_et))
                             dialog?.cancel()
                             Toast.makeText(root.context, "Muvaffaqiyatli qo'shildi!", Toast.LENGTH_LONG).show()
-                            kurslarList.add(Kurs(kurs_nomi_et))
+                            kurslarList.add(Kurs(id.toInt(),kurs_nomi_et,kurs_haqida_et))
                             kurslarAdapter.notifyItemInserted(kurslarList.size - 1)
                             kurslarAdapter.notifyItemRangeChanged(kurslarList.size - 1, kurslarList.size)
                         } else {

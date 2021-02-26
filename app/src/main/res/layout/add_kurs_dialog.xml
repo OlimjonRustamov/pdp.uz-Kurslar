@@ -27,11 +27,44 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="26sp"
-        android:padding="0dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="10dp"
         android:layout_margin="0dp"
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
         android:textCursorDrawable="@drawable/cursor_color" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kurs haqida"
+        android:textColorHint="@android:color/black"
+        app:boxStrokeColor="@color/main_color"
+        app:boxStrokeWidthFocused="1.5dp"
+        app:errorEnabled="true"
+        app:errorTextColor="#ff0000"
+        app:helperTextTextColor="@color/main_color"
+        app:hintTextColor="@color/main_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_kurs_dialog__description"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:textSize="26sp"
+            android:gravity="start"
+            android:padding="8dp"
+            android:layout_margin="0dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

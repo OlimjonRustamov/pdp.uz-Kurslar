@@ -38,10 +38,19 @@
         android:id="@+id/mentorlarFragment"
         android:name="com.tuit_21019.pdpuzkurslar.mentorlar.MentorlarFragment"
         android:label="fragment_mentorlar"
-        tools:layout="@layout/fragment_mentorlar" />
+        tools:layout="@layout/fragment_mentorlar" >
+        <action
+            android:id="@+id/action_mentorlarFragment_to_mentorQoshishFragment"
+            app:destination="@id/mentorQoshishFragment" />
+    </fragment>
     <fragment
         android:id="@+id/kurshaqidaFragment"
         android:name="com.tuit_21019.pdpuzkurslar.kurslar.KurshaqidaFragment"
         android:label="fragment_kurshaqida"
         tools:layout="@layout/fragment_kurshaqida" />
+    <fragment
+        android:id="@+id/mentorQoshishFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.MentorQoshishFragment"
+        android:label="fragment_mentor_qoshish"
+        tools:layout="@layout/fragment_mentor_qoshish" />
 </navigation>

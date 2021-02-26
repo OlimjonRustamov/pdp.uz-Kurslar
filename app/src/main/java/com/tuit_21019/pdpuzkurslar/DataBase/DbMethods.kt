@@ -6,13 +6,13 @@ import com.tuit_21019.pdpuzkurslar.models.Mentor
 import com.tuit_21019.pdpuzkurslar.models.Talaba
 
 interface DbMethods {
-    fun insertKurs(kurs: Kurs)
+    fun insertKurs(kurs: Kurs):Long
 
     fun getAllKurs(): ArrayList<Kurs>
 
 
     //mentor uchun methodlar
-    fun insertMentor(mentor: Mentor)
+    fun insertMentor(mentor: Mentor):Long
 
     fun updateMentor(mentor: Mentor)
     //update qilishda o'sha mentor obyektni malumotlarini yangilash kerak
@@ -24,7 +24,7 @@ interface DbMethods {
 
 
     //guruh uchun methodlar
-    fun insertGuruh(guruh: Guruh)
+    fun insertGuruh(guruh: Guruh):Long
 
     fun updateGuruh(updated: Guruh)
 
@@ -35,7 +35,7 @@ interface DbMethods {
     //talaba uchun methodlar
     fun getAllStudentsByGroupId(guruh_id: Int): ArrayList<Talaba>
 
-    fun insertTalaba(talaba: Talaba)
+    fun insertTalaba(talaba: Talaba):Long
 
     fun updateTalaba(updated: Talaba)
 
