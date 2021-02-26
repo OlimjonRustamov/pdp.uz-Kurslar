@@ -48,6 +48,7 @@ class Barcha_kurslarFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_barcha_kurslar, container, false)
 
         setToolbar()
+        loadData()
         kurslarList = db.getAllKurs()
 
         kurslarAdapter = KurslarAdapter(kurslarList)
@@ -57,6 +58,10 @@ class Barcha_kurslarFragment : Fragment() {
         setMyItemClick()
 
         return root
+    }
+
+    private fun loadData() {
+
     }
 
     companion object {

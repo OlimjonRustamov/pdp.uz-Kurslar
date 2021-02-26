@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/barcha_kurslarFragment"
-        android:name="com.tuit_21019.pdpuzkurslar.Barcha_kurslarFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.kurslar.Barcha_kurslarFragment"
         android:label="Barcha kurslar"
         tools:layout="@layout/fragment_barcha_kurslar" >
         <action
@@ -31,17 +31,17 @@
     </fragment>
     <fragment
         android:id="@+id/guruhlarFragment"
-        android:name="com.tuit_21019.pdpuzkurslar.GuruhlarFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.guruhlar.GuruhlarFragment"
         android:label="fragment_guruhlar"
         tools:layout="@layout/fragment_guruhlar" />
     <fragment
         android:id="@+id/mentorlarFragment"
-        android:name="com.tuit_21019.pdpuzkurslar.MentorlarFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.mentorlar.MentorlarFragment"
         android:label="fragment_mentorlar"
         tools:layout="@layout/fragment_mentorlar" />
     <fragment
         android:id="@+id/kurshaqidaFragment"
-        android:name="com.tuit_21019.pdpuzkurslar.KurshaqidaFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.kurslar.KurshaqidaFragment"
         android:label="fragment_kurshaqida"
         tools:layout="@layout/fragment_kurshaqida" />
 </navigation>
