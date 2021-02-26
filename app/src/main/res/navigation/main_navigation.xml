@@ -50,7 +50,7 @@
         tools:layout="@layout/fragment_kurshaqida" />
     <fragment
         android:id="@+id/mentorQoshishFragment"
-        android:name="com.tuit_21019.pdpuzkurslar.MentorQoshishFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.mentorlar.MentorQoshishFragment"
         android:label="fragment_mentor_qoshish"
         tools:layout="@layout/fragment_mentor_qoshish" />
 </navigation>

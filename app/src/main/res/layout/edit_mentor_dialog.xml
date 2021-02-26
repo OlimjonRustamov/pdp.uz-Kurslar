@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".mentorlar.MentorQoshishFragment">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/appbarlayout"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            app:titleTextColor="@android:color/white"
-            android:id="@+id/toolbar"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            android:layout_width="match_parent"
-            app:theme="@style/ToolbarColoredBackArrow"
-            android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/main_color" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -42,10 +21,10 @@
         app:hintTextColor="@color/main_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbarlayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_mentor_ismi_et"
+            android:id="@+id/edit_mentor_ismi_et"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:textSize="26sp"
@@ -79,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_mentor_familyasi_et"
+            android:id="@+id/edit_mentor_familyasi_et"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:textSize="26sp"
@@ -113,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@id/layout2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_mentor_otasining_ismi_et"
+            android:id="@+id/edit_mentor_otasining_ismi_et"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:textSize="26sp"
@@ -126,18 +105,4 @@
             android:textColorHint="@android:color/darker_gray"
             android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:text="Qo'shish"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:padding="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/add_mentor_btn"
-        android:textAllCaps="false"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="40dp"
-        android:layout_width="160dp"
-        android:layout_height="60dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

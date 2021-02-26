@@ -86,7 +86,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "pdpuz_kurslar", nu
     override fun getAllMentorsByKursId(id:Int): ArrayList<Mentor> {
         val db=this.readableDatabase
         val mentorList = ArrayList<Mentor>()
-        val cursor = db.rawQuery("select * from mentorlar where id=$id", null)
+        val cursor = db.rawQuery("select * from mentorlar where kurs_id=$id", null)
         if (cursor.moveToFirst()) {
             do {
                 mentorList.add(Mentor(cursor.getInt(0),

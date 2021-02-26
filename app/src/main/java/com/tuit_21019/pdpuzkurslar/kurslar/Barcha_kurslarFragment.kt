@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.adapters.KurslarAdapter
@@ -99,12 +100,12 @@ class Barcha_kurslarFragment : Fragment() {
                         if (kurs_nomi_et.trim() != ""&&kurs_haqida_et.trim()!="") {
                             val id=db.insertKurs(Kurs(kurs_nomi_et,kurs_haqida_et))
                             dialog?.cancel()
-                            Toast.makeText(root.context, "Muvaffaqiyatli qo'shildi!", Toast.LENGTH_LONG).show()
+                            Snackbar.make(root,"Muvaffaqiyatli qo'shildi!",Snackbar.LENGTH_LONG).show()
                             kurslarList.add(Kurs(id.toInt(),kurs_nomi_et,kurs_haqida_et))
                             kurslarAdapter.notifyItemInserted(kurslarList.size - 1)
                             kurslarAdapter.notifyItemRangeChanged(kurslarList.size - 1, kurslarList.size)
                         } else {
-                            Toast.makeText(root.context, "Kurs nomi bo'sh bo'lishi mumkin emas!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(root.context, "Barcha maydonlarni to'ldiring", Toast.LENGTH_LONG).show()
                         }
                     }
                 })
