@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KurshaqidaFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".kurslar.KurshaqidaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Kurs haqida" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/appbarlayout"
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            app:titleTextColor="@android:color/white"
+            android:id="@+id/toolbar"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:layout_width="match_parent"
+            app:theme="@style/ToolbarColoredBackArrow"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/main_color" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/kurs_haqida_scrollview"
+        app:layout_constraintTop_toBottomOf="@id/appbarlayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/kurs_haqida_talaba_qoshish"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/kurs_haqida_textview"
+            android:layout_width="match_parent"
+            android:textSize="24sp"
+            android:text="AAAAAAAA"
+            android:textColor="#000"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/kurs_haqida_talaba_qoshish"
+        app:layout_constraintTop_toBottomOf="@id/kurs_haqida_scrollview"
+        android:text="Talaba qo'shish"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:backgroundTint="@color/main_color"
+        android:textSize="16sp"
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="180dp"
+        android:layout_height="60dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,7 +51,11 @@
         android:id="@+id/kurshaqidaFragment"
         android:name="com.tuit_21019.pdpuzkurslar.kurslar.KurshaqidaFragment"
         android:label="fragment_kurshaqida"
-        tools:layout="@layout/fragment_kurshaqida" />
+        tools:layout="@layout/fragment_kurshaqida" >
+        <action
+            android:id="@+id/action_kurshaqidaFragment_to_talabaQoshishFragment"
+            app:destination="@id/talabaQoshishFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mentorQoshishFragment"
         android:name="com.tuit_21019.pdpuzkurslar.mentorlar.MentorQoshishFragment"
@@ -71,4 +75,9 @@
         android:name="com.tuit_21019.pdpuzkurslar.guruhlar.AddGroup"
         android:label="fragment_add_group"
         tools:layout="@layout/fragment_add_group" />
+    <fragment
+        android:id="@+id/talabaQoshishFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.kurslar.TalabaQoshishFragment"
+        android:label="fragment_talaba_qoshish"
+        tools:layout="@layout/fragment_talaba_qoshish" />
 </navigation>
