@@ -59,7 +59,7 @@ class AddGroup : Fragment() {
         root.add_group_save.setOnClickListener {
             var courseName = root.add_group_course_name.text.toString()
             var mentor = mentors!![root.add_group_add_mentor.selectedItemPosition]
-            var time = time!![root.add_group_add_mentor.selectedItemPosition]
+            var time = time!![root.add_group_add_time.selectedItemPosition]
             var mentorID = 0
 
             if (courseName.isNotEmpty() && !mentor.equals("Mentorni tanlang",true) && !time.equals("Vaqti", true)) {
