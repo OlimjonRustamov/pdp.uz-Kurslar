@@ -1,16 +1,18 @@
-package com.tuit_21019.pdpuzkurslar
+package com.tuit_21019.pdpuzkurslar.kurslar
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.adapters.KurslarAdapter
 import com.tuit_21019.pdpuzkurslar.models.Kurs
 import kotlinx.android.synthetic.main.add_kurs_dialog.view.*
@@ -22,11 +24,11 @@ private const val ARG_PARAM1 = "navigation"
 class Barcha_kurslarFragment : Fragment() {
     private var param1: String? = null
 
-    lateinit var db:DbHelper
+    lateinit var db: DbHelper
 
     lateinit var root: View
     lateinit var kurslarAdapter: KurslarAdapter
-    lateinit var kurslarList:ArrayList<Kurs>
+    lateinit var kurslarList: ArrayList<Kurs>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +38,19 @@ class Barcha_kurslarFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
 
         @SuppressLint("UseRequireInsteadOfGet")
-        db=DbHelper(this.context!!)
+        db = DbHelper(this.context!!)
 
         root = inflater.inflate(R.layout.fragment_barcha_kurslar, container, false)
 
         setToolbar()
         kurslarList = db.getAllKurs()
 
-        kurslarAdapter=KurslarAdapter(kurslarList)
+        kurslarAdapter = KurslarAdapter(kurslarList)
         root.kurslar_recyclerview.adapter = kurslarAdapter
         root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
 
@@ -60,19 +62,19 @@ class Barcha_kurslarFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(param1: String) =
-            Barcha_kurslarFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                Barcha_kurslarFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+                    }
                 }
-            }
     }
 
     private fun setToolbar() {
-        root.toolbar.title="Barcha kurslar"
+        root.toolbar.title = "Barcha kurslar"
         if (param1 == "guruhlar") {
-            root.toolbar.menu.getItem(0).setVisible(false)
+            root.toolbar.menu.getItem(0).isVisible = false
         } else if (param1 == "mentorlar") {
-            root.toolbar.menu.getItem(0).setVisible(false)
+            root.toolbar.menu.getItem(0).isVisible = false
             //toolbar menuni to'g'rilash hammasida ham menu yoq ekan
         }
 
@@ -112,16 +114,16 @@ class Barcha_kurslarFragment : Fragment() {
     }
 
     private fun setMyItemClick() {
-        kurslarAdapter.kursItemClick=object : KurslarAdapter.KursItemClick {
-            override fun kursitemClick(kurs:Kurs) {
+        kurslarAdapter.kursItemClick = object : KurslarAdapter.KursItemClick {
+            override fun kursitemClick(kurs: Kurs) {
                 val bundle = Bundle()
-                bundle.putSerializable("kurs",kurs)
+                bundle.putSerializable("kurs", kurs)
                 if (param1 == "mentorlar") {
-                    findNavController().navigate(R.id.mentorlarFragment,bundle)
+                    findNavController().navigate(R.id.mentorlarFragment, bundle)
                 } else if (param1 == "guruhlar") {
-                    findNavController().navigate(R.id.guruhlarFragment,bundle)
+                    findNavController().navigate(R.id.guruhlarFragment, bundle)
                 } else if (param1 == "kurs_haqida") {
-                    findNavController().navigate(R.id.kurshaqidaFragment,bundle)
+                    findNavController().navigate(R.id.kurshaqidaFragment, bundle)
                 }
             }
         }

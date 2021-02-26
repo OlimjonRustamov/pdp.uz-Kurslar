@@ -13,7 +13,7 @@ class KurslarAdapter(var kurslarList: ArrayList<Kurs>) : RecyclerView.Adapter<Ku
 
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun myBind(kurs:Kurs) {
+        fun myBind(kurs: Kurs) {
             itemView.item_kurslar_title.text = kurs.kurs_nomi
 
             itemView.kurslar_item_cardview.setOnClickListener {
@@ -25,16 +25,16 @@ class KurslarAdapter(var kurslarList: ArrayList<Kurs>) : RecyclerView.Adapter<Ku
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
-        return Vh(LayoutInflater.from(parent.context).inflate(R.layout.item_kurslar,parent,false))
+        return Vh(LayoutInflater.from(parent.context).inflate(R.layout.item_kurslar, parent, false))
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
         holder.myBind(kurslarList[position])
     }
 
-    override fun getItemCount(): Int =kurslarList.size
+    override fun getItemCount(): Int = kurslarList.size
 
-    interface KursItemClick{
+    interface KursItemClick {
         fun kursitemClick(kurs: Kurs)
     }
 

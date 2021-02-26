@@ -8,7 +8,7 @@ import com.tuit_21019.pdpuzkurslar.models.Talaba
 interface DbMethods {
     fun insertKurs(kurs: Kurs)
 
-    fun getAllKurs():ArrayList<Kurs>
+    fun getAllKurs(): ArrayList<Kurs>
 
 
     //mentor uchun methodlar
@@ -20,7 +20,7 @@ interface DbMethods {
 
     fun deleteMentor(mentor: Mentor)
 
-    fun getAllMentorsByKursId(id:Int):ArrayList<Mentor>
+    fun getAllMentorsByKursId(id: Int): ArrayList<Mentor>
 
 
     //guruh uchun methodlar
@@ -33,7 +33,7 @@ interface DbMethods {
     fun getAllGroupsByKursId(kurs_id: Int): ArrayList<Guruh>
 
     //talaba uchun methodlar
-    fun getAllStudentsByGroupId(guruh_id:Int):ArrayList<Talaba>
+    fun getAllStudentsByGroupId(guruh_id: Int): ArrayList<Talaba>
 
     fun insertTalaba(talaba: Talaba)
 
