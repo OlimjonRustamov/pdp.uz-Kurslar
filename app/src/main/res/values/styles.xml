@@ -4,4 +4,10 @@
     <style name="ToolbarColoredBackArrow" parent="Theme.PDPUZKurslar">
         <item name="android:textColorSecondary">@color/white</item>
     </style>
+
+    <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">8dp</item>
+        <item name="android:solidColor">#00000000</item>
+    </style>
+
 </resources>

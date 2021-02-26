@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:text="PDP Android G-18"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/group_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/group_student_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Talabalar sonu: 20 ta"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/group_view"
+        app:layout_constraintTop_toBottomOf="@id/group_name" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/group_delete"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/grp_btns_back"
+        android:backgroundTint="#FF0000"
+        android:src="@drawable/ic_trash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/group_edit"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/grp_btns_back"
+        android:backgroundTint="#FFB800"
+        android:src="@drawable/ic_pencil"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/group_delete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/group_view"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/grp_btns_back"
+        android:backgroundTint="#50AE46"
+        android:src="@drawable/ic_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/group_edit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#DBDBDB"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

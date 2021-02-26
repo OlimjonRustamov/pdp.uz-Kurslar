@@ -33,7 +33,11 @@
         android:id="@+id/guruhlarFragment"
         android:name="com.tuit_21019.pdpuzkurslar.guruhlar.GuruhlarFragment"
         android:label="fragment_guruhlar"
-        tools:layout="@layout/fragment_guruhlar" />
+        tools:layout="@layout/fragment_guruhlar" >
+        <action
+            android:id="@+id/action_guruhlarFragment_to_groupByStatusFragment"
+            app:destination="@id/groupByStatusFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mentorlarFragment"
         android:name="com.tuit_21019.pdpuzkurslar.mentorlar.MentorlarFragment"
@@ -53,4 +57,18 @@
         android:name="com.tuit_21019.pdpuzkurslar.mentorlar.MentorQoshishFragment"
         android:label="fragment_mentor_qoshish"
         tools:layout="@layout/fragment_mentor_qoshish" />
+    <fragment
+        android:id="@+id/groupByStatusFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.guruhlar.GroupByStatusFragment"
+        android:label="fragment_group_by_status"
+        tools:layout="@layout/fragment_group_by_status" >
+        <action
+            android:id="@+id/action_groupByStatusFragment_to_addGroup"
+            app:destination="@id/addGroup" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroup"
+        android:name="com.tuit_21019.pdpuzkurslar.guruhlar.AddGroup"
+        android:label="fragment_add_group"
+        tools:layout="@layout/fragment_add_group" />
 </navigation>

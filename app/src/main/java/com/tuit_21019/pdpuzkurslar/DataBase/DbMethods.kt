@@ -32,7 +32,7 @@ interface DbMethods {
 
     fun getAllGroupsByKursId(kurs_id: Int): ArrayList<Guruh>
 
-    fun getAllGroupByStatus(ochilganligi: String):ArrayList<Guruh>
+    fun getAllGroupByStatus(ochilganligi: Int):ArrayList<Guruh>
 
     //talaba uchun methodlar
     fun getAllStudentsByGroupId(guruh_id: Int): ArrayList<Talaba>

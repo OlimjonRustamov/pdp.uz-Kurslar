@@ -7,23 +7,23 @@
     tools:context=".guruhlar.GuruhlarFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/appbarlayout"
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/main_color"
-            app:menu="@menu/add_button"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:theme="@style/ToolbarColoredBackArrow"
             app:title="Android Development"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@android:color/white"
+            android:id="@+id/toolbar"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:menu="@menu/add_button"
+            android:layout_width="match_parent"
+            app:theme="@style/ToolbarColoredBackArrow"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/main_color" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,11 +39,10 @@
         app:tabMode="auto"
         app:tabTextColor="@android:color/white" />
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/group_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tab_layout" />
 
