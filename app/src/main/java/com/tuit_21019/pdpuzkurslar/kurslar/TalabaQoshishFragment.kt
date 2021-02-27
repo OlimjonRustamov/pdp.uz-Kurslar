@@ -10,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
-import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter2
+import com.tuit_21019.pdpuzkurslar.models.Guruh
 import com.tuit_21019.pdpuzkurslar.models.Kurs
 import kotlinx.android.synthetic.main.fragment_add_group.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.*
@@ -26,9 +26,14 @@ class TalabaQoshishFragment : Fragment() {
 
     private var mentors: ArrayList<String>? = null
     private var time: ArrayList<String>? = null
+    private var kunlar: ArrayList<String>? = null
+    private var guruhlar: ArrayList<String>? = null
     private var db: DbHelper? = null
-    private var spinnerAdapter: AddGroupSpinnerAdapter? = null
-    private var spinnerAdapter2: AddGroupSpinnerAdapter2? = null
+
+    private var mentorAdapter: AddGroupSpinnerAdapter? = null
+    private var kunlarAdapter: AddGroupSpinnerAdapter? = null
+    private var timeAdapter: AddGroupSpinnerAdapter? = null
+    private var guruhlarAdapter: AddGroupSpinnerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +52,8 @@ class TalabaQoshishFragment : Fragment() {
         loadData()
         loadMentors()
         loadTime()
+        loadKunlar()
+        loadGuruhlar()
         return root
     }
 
@@ -73,21 +80,24 @@ class TalabaQoshishFragment : Fragment() {
     }
 
     private fun loadTime() {
-        spinnerAdapter2 = AddGroupSpinnerAdapter2()
-        spinnerAdapter2?.setAdapter(time!!, root.context)
-        root.add_student_add_time.adapter = spinnerAdapter2
+        timeAdapter = AddGroupSpinnerAdapter()
+        timeAdapter?.setAdapter(time!!, root.context)
+        root.add_student_add_time.adapter = timeAdapter
     }
 
     private fun loadMentors() {
-        spinnerAdapter = AddGroupSpinnerAdapter()
-        spinnerAdapter?.setAdapter(mentors!!, root.context)
-        root.add_student_add_mentor.adapter = spinnerAdapter
+        mentorAdapter = AddGroupSpinnerAdapter()
+        mentorAdapter?.setAdapter(mentors!!, root.context)
+        root.add_student_add_mentor.adapter = mentorAdapter
     }
 
     private fun loadData() {
         mentors = ArrayList()
         time = ArrayList()
-        db=DbHelper(root.context)
+        kunlar = ArrayList()
+        guruhlar= ArrayList()
+
+        db= DbHelper(root.context)
         mentors!!.add("Mentorni tanlang")
         for (i in 0 until db?.getAllMentorsByKursId(param1!!.id!!)!!.size) {
             mentors?.add(
@@ -99,5 +109,24 @@ class TalabaQoshishFragment : Fragment() {
         time?.add("Vaqti")
         time?.add("16:30 - 18:30")
         time?.add("19:00 - 21:00")
+
+        guruhlar!!.add("Guruhlar")
+        for (i in 0 until db!!.getAllGroupsByKursId(param1!!.id!!).size) {
+            guruhlar!!.add(db!!.getAllGroupsByKursId(param1!!.id!!)[i].guruh_nomi!!)
+        }
+
+        kunlar!!.add("Kunlar")
+        kunlar!!.add("Juft kunlar")
+        kunlar!!.add("Toq kunlar")
+    }
+    private fun loadKunlar() {
+        kunlarAdapter = AddGroupSpinnerAdapter()
+        kunlarAdapter!!.setAdapter(kunlar!!,root.context)
+        root.add_student_add_kunlar.adapter=kunlarAdapter
+    }
+    private fun loadGuruhlar() {
+        guruhlarAdapter = AddGroupSpinnerAdapter()
+        guruhlarAdapter!!.setAdapter(guruhlar!!, root.context)
+        root.add_student_add_guruhlar.adapter=guruhlarAdapter
     }
 }
