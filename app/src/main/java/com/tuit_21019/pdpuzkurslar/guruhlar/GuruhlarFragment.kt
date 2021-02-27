@@ -45,9 +45,8 @@ class GuruhlarFragment : Fragment() {
     ): View {
         db = DbHelper(this.context!!)
         root = inflater.inflate(R.layout.fragment_guruhlar, container, false)
-        root.toolbar.title=param1!!.kurs_nomi
-        root.toolbar.menu.getItem(0).isVisible = false
-
+        Log.d("AAAA", "KursID: ${param1?.id}")
+        setToolBar()
 
         loadData()
         loadAdapters()
@@ -55,6 +54,11 @@ class GuruhlarFragment : Fragment() {
         backBtnClick()
 
         return root
+    }
+
+    private fun setToolBar() {
+        root.toolbar.title=param1!!.kurs_nomi
+        root.toolbar.menu.getItem(0).isVisible = false
     }
 
     private fun backBtnClick() {
@@ -126,11 +130,12 @@ class GuruhlarFragment : Fragment() {
     private fun loadData() {
         groupList = ArrayList()
         if (db.getAllGroupByStatus(1).isEmpty()) {
-            db.insertGuruh(Guruh("Android 5", 1, 1, 1, "10:00-12:00"))
-            db.insertGuruh(Guruh("Android 5", 1, 1, 1, "10:00-12:00"))
+            db.insertGuruh(Guruh("Android 5", 1, 1, param1?.id, "10:00-12:00"))
+            db.insertGuruh(Guruh("Android 4", 1, 1, param1?.id, "10:00-12:00"))
         }
-        groupList!!.addAll(db.getAllGroupByStatus(1))
-        groupList!!.addAll(db.getAllGroupByStatus(0))
+
+        groupList!!.addAll(db.getGroupByKursIdAndStatus(1,param1?.id!!))
+        groupList!!.addAll(db.getGroupByKursIdAndStatus(0,param1?.id!!))
 
         Log.d("AAAA", "loadData: ${groupList!!.size}")
     }

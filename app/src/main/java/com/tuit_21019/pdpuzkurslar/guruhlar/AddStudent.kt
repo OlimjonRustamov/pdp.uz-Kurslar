@@ -1,0 +1,122 @@
+package com.tuit_21019.pdpuzkurslar.guruhlar
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.R
+import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
+import com.tuit_21019.pdpuzkurslar.models.Guruh
+import com.tuit_21019.pdpuzkurslar.models.Mentor
+import com.tuit_21019.pdpuzkurslar.models.Talaba
+import kotlinx.android.synthetic.main.fragment_add_student.view.*
+import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.*
+import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.toolbar
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "group_to_student_add"
+private const val ARG_PARAM2 = "param2"
+
+class AddStudent : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var group: Guruh? = null
+    private var param2: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            group = it.getSerializable(ARG_PARAM1) as Guruh?
+            param2 = it.getString(ARG_PARAM2)
+        }
+        db= DbHelper(this.requireContext())
+    }
+
+    lateinit var root:View
+    private var db:DbHelper?=null
+    private var student: Talaba?=null
+
+    private var mentorList:ArrayList<String>?=null
+    private var daysList:ArrayList<String>?=null
+    private var timeList:ArrayList<String>?=null
+    private var groupList:ArrayList<String>?=null
+
+
+    private var mentorSpinner:AddGroupSpinnerAdapter?=null
+    private var daysSpinner:AddGroupSpinnerAdapter?=null
+    private var timeSpinner:AddGroupSpinnerAdapter?=null
+    private var groupsSpinner:AddGroupSpinnerAdapter?=null
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        root = inflater.inflate(R.layout.fragment_add_student, container, false)
+        Log.d("AAAA", "groupid: ${group?.guruh_nomi}")
+        setToolbar()
+        loadData()
+        loadSpinners()
+        loadDataToView()
+        return root
+    }
+
+    private fun loadDataToView() {
+        root.add_student_mentor.adapter=mentorSpinner
+        root.add_student_days.adapter=daysSpinner
+        root.add_student_time.adapter=timeSpinner
+        root.add_student_group.adapter=groupsSpinner
+    }
+
+    private fun setToolbar() {
+        root.toolbar.title = "Talaba qo'shish"
+        root.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun loadSpinners() {
+        mentorSpinner= AddGroupSpinnerAdapter()
+        mentorSpinner?.setAdapter(mentorList!!,root.context)
+
+        daysSpinner=AddGroupSpinnerAdapter()
+        daysSpinner?.setAdapter(daysList!!,root.context)
+
+        timeSpinner = AddGroupSpinnerAdapter()
+        timeSpinner?.setAdapter(timeList!!,root.context)
+
+        groupsSpinner = AddGroupSpinnerAdapter()
+        groupsSpinner?.setAdapter(groupList!!, root.context)
+    }
+
+    private fun loadData() {
+        mentorList=ArrayList()
+        daysList=ArrayList()
+        timeList=ArrayList()
+        groupList=ArrayList()
+
+        mentorList?.add(db?.getMentorByID(group?.mentor_id!!)?.mentor_nomi+" "+db?.getMentorByID(group?.mentor_id!!)?.mentor_familyasi)
+
+        daysList?.add("Kunlari")
+        daysList?.add("Toq kunlar")
+        daysList?.add("Juft kunlar")
+
+        timeList?.add(group?.dars_vaqti.toString())
+
+        groupList?.add(group?.guruh_nomi.toString())
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(group: String, param2: String) =
+            AddStudent().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, group)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+}

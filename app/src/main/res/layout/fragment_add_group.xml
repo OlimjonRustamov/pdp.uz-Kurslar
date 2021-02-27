@@ -7,23 +7,23 @@
     tools:context=".guruhlar.AddGroup">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/appbarlayout"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            app:title="Yangi guruh qo'shish"
-            app:titleTextColor="@android:color/white"
             android:id="@+id/toolbar"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:menu="@menu/add_button"
             android:layout_width="match_parent"
-            app:theme="@style/ToolbarColoredBackArrow"
             android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/main_color" />
+            android:backgroundTint="@color/main_color"
+            app:menu="@menu/add_button"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:theme="@style/ToolbarColoredBackArrow"
+            app:title="Yangi guruh qo'shish"
+            app:titleTextColor="@android:color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -33,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:hint="Kurs nomi"
         app:boxStrokeColor="@color/main_color"
         app:boxStrokeWidthFocused="1.5dp"
@@ -64,9 +64,9 @@
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/add_group_add_mentor"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_height="50dp"
         android:background="@drawable/spinner_back"
         app:layout_constraintTop_toBottomOf="@id/layout" />
 
@@ -75,21 +75,23 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/spinner_back"
         app:layout_constraintTop_toBottomOf="@id/add_group_add_mentor" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_group_save"
-        android:layout_width="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:background="@drawable/grp_btns_back"
         android:backgroundTint="@color/main_color"
         android:text="Saqlash"
-        android:background="@drawable/grp_btns_back"
+        android:textSize="18sp"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:layout_height="wrap_content" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

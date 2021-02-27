@@ -69,6 +69,12 @@
         <action
             android:id="@+id/action_groupByStatusFragment_to_addGroup"
             app:destination="@id/addGroup" />
+        <action
+            android:id="@+id/action_groupByStatusFragment_to_groupItemFragment"
+            app:destination="@id/groupItemFragment" />
+        <action
+            android:id="@+id/action_groupByStatusFragment_to_editGroupItemDialog"
+            app:destination="@id/editGroupItemDialog" />
     </fragment>
     <fragment
         android:id="@+id/addGroup"
@@ -80,4 +86,22 @@
         android:name="com.tuit_21019.pdpuzkurslar.kurslar.TalabaQoshishFragment"
         android:label="fragment_talaba_qoshish"
         tools:layout="@layout/fragment_talaba_qoshish" />
+    <fragment
+        android:id="@+id/groupItemFragment"
+        android:name="com.tuit_21019.pdpuzkurslar.guruhlar.GroupItemFragment"
+        android:label="fragment_group_item"
+        tools:layout="@layout/fragment_group_item" >
+        <action
+            android:id="@+id/action_groupItemFragment_to_addStudent"
+            app:destination="@id/addStudent" />
+    </fragment>
+    <dialog
+        android:id="@+id/editGroupItemDialog"
+        android:name="com.tuit_21019.pdpuzkurslar.guruhlar.dialogs.EditGroupItemDialog"
+        android:label="EditGroupItemDialog" />
+    <fragment
+        android:id="@+id/addStudent"
+        android:name="com.tuit_21019.pdpuzkurslar.guruhlar.AddStudent"
+        android:label="fragment_add_student"
+        tools:layout="@layout/fragment_add_student" />
 </navigation>

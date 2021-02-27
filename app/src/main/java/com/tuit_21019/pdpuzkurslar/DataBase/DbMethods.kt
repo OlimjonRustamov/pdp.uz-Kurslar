@@ -22,6 +22,8 @@ interface DbMethods {
 
     fun getAllMentorsByKursId(id: Int): ArrayList<Mentor>
 
+    fun getMentorByID(id: Int):Mentor
+
 
     //guruh uchun methodlar
     fun insertGuruh(guruh: Guruh):Long
@@ -33,6 +35,8 @@ interface DbMethods {
     fun getAllGroupsByKursId(kurs_id: Int): ArrayList<Guruh>
 
     fun getAllGroupByStatus(ochilganligi: Int):ArrayList<Guruh>
+
+    fun getGroupByKursIdAndStatus(ochilganligi: Int,kursID:Int):ArrayList<Guruh>
 
     //talaba uchun methodlar
     fun getAllStudentsByGroupId(guruh_id: Int): ArrayList<Talaba>

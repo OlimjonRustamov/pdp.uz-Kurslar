@@ -109,6 +109,25 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "pdpuz_kurslar", nu
         return mentorList
     }
 
+    override fun getMentorByID(id: Int): Mentor {
+        val db = this.readableDatabase
+        var mentor:Mentor?=null
+        val cursor = db.rawQuery("select * from mentorlar where id=$id", null)
+        if (cursor.moveToFirst()) {
+            do {
+                mentor= Mentor(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getInt(4)
+                )
+            }while (cursor.moveToNext())
+        }
+        cursor.close()
+        return mentor!!
+    }
+
     override fun insertGuruh(guruh: Guruh): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -183,6 +202,29 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "pdpuz_kurslar", nu
         cursor.close()
         db.close()
         return groupByStatus
+    }
+
+    override fun getGroupByKursIdAndStatus(ochilganligi: Int, kursID: Int):ArrayList<Guruh> {
+        val db = this.readableDatabase
+        val groupByStatusAndKursID = ArrayList<Guruh>()
+        val cursor = db.rawQuery("select * from guruhlar where kurs_id=$kursID and ochilganligi=$ochilganligi", null)
+        if (cursor.moveToFirst()) {
+            do {
+                groupByStatusAndKursID.add(
+                    Guruh(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5)
+                    )
+                )
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return groupByStatusAndKursID
     }
 
     override fun getAllStudentsByGroupId(guruh_id: Int): ArrayList<Talaba> {

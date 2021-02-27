@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
 import com.tuit_21019.pdpuzkurslar.R
@@ -15,7 +16,6 @@ import com.tuit_21019.pdpuzkurslar.guruhlar.dialogs.EditGroupItemDialog
 import com.tuit_21019.pdpuzkurslar.models.Guruh
 import com.tuit_21019.pdpuzkurslar.models.Mentor
 import kotlinx.android.synthetic.main.fragment_group_by_status.view.*
-import kotlin.concurrent.fixedRateTimer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,8 +53,19 @@ class GroupByStatusFragment : Fragment() {
         loadAdapters()
         onItemDeleteClick()
         onItemEditClick()
-
+        onViewClick()
         return root
+    }
+
+    private fun onViewClick() {
+        adapter?.setOnViewClick(object : GroupByStatusAdapter.OnViewClick {
+            override fun onClick(guruh: Guruh, position: Int) {
+                val bundle = Bundle()
+                bundle.putSerializable("group", guruh)
+                findNavController().navigate(R.id.groupItemFragment, bundle)
+            }
+
+        })
     }
 
     private fun onItemEditClick() {
@@ -73,9 +84,10 @@ class GroupByStatusFragment : Fragment() {
                     override fun onClick(guruh: Guruh) {
                         db?.updateGuruh(guruh)
 
-                        adapter?.groupList=db!!.getAllGroupByStatus(status)
+                        adapter?.groupList = db!!.getAllGroupByStatus(status)
                         adapter?.notifyItemChanged(position)
-                        Snackbar.make(root, "Muvaffaqiyatli o'zgartirildi", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(root, "Muvaffaqiyatli o'zgartirildi", Snackbar.LENGTH_LONG)
+                            .show()
                     }
                 })
 
@@ -120,7 +132,7 @@ class GroupByStatusFragment : Fragment() {
         }
 
         groupList = ArrayList()
-        groupList = db?.getAllGroupByStatus(status)
+        groupList = db?.getGroupByKursIdAndStatus(status, param2!!)
 
         studentCountList = ArrayList()
         for (i in 0 until groupList!!.size) {
