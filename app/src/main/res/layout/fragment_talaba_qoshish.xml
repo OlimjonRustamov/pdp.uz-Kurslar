@@ -1,14 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".kurslar.TalabaQoshishFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/appbarlayout"
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            app:titleTextColor="@android:color/white"
+            android:id="@+id/toolbar"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:layout_width="match_parent"
+            app:theme="@style/ToolbarColoredBackArrow"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/main_color" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/appbarlayout"
+        android:paddingBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@id/add_student_btn"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="16dp"
+            android:layout_height="match_parent">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="Ismi"
+                android:textColorHint="@android:color/black"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                android:paddingTop="8dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_tabala_ismi_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textSize="26sp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:inputType="text"
+                    android:paddingBottom="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="Familyasi"
+                android:textColorHint="@android:color/black"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_talaba_familyasi_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textSize="26sp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="Otasining ismi"
+                android:textColorHint="@android:color/black"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_talaba_otasining_ismi_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textSize="26sp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout4"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="12/21/2021"
+                android:textColorHint="@android:color/black"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_talaba_boshlash_vaqti_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textSize="26sp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_add_mentor"
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="50dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/layout4" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_add_time"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/add_student_add_mentor" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_add_kunlar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/add_student_add_time" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_add_guruhlar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/add_student_add_kunlar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:text="Saqlash"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/add_student_btn"
+        android:textAllCaps="false"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="160dp"
+        android:layout_height="60dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
