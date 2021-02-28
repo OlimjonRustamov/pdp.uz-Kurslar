@@ -3,6 +3,7 @@ package com.tuit_21019.pdpuzkurslar.guruhlar
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +18,11 @@ import com.tuit_21019.pdpuzkurslar.models.Guruh
 import com.tuit_21019.pdpuzkurslar.models.Mentor
 import kotlinx.android.synthetic.main.fragment_group_by_status.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class GroupByStatusFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: Int? = null
     private var param2: Int? = null
 
@@ -136,7 +135,7 @@ class GroupByStatusFragment : Fragment() {
 
         studentCountList = ArrayList()
         for (i in 0 until groupList!!.size) {
-            studentCountList?.add(db?.getAllStudentsByGroupId(groupList!![i].kurs_id!!)!!.size)
+            studentCountList?.add(db?.getAllStudentsByGroupId(groupList!![i].id!!)!!.size)
         }
     }
 

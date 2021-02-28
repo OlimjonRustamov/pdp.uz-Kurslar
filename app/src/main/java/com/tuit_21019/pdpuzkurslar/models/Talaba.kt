@@ -1,6 +1,8 @@
 package com.tuit_21019.pdpuzkurslar.models
 
-class Talaba {
+import java.io.Serializable
+
+class Talaba : Serializable {
     var id: Int? = null
     var talaba_ismi: String? = null
     var talaba_familyasi: String? = null

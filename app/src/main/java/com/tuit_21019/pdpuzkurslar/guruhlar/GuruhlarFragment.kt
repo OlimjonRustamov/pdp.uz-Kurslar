@@ -129,15 +129,8 @@ class GuruhlarFragment : Fragment() {
 
     private fun loadData() {
         groupList = ArrayList()
-        if (db.getAllGroupByStatus(1).isEmpty()) {
-            db.insertGuruh(Guruh("Android 5", 1, 1, param1?.id, "10:00-12:00"))
-            db.insertGuruh(Guruh("Android 4", 1, 1, param1?.id, "10:00-12:00"))
-        }
-
         groupList!!.addAll(db.getGroupByKursIdAndStatus(1,param1?.id!!))
         groupList!!.addAll(db.getGroupByKursIdAndStatus(0,param1?.id!!))
-
-        Log.d("AAAA", "loadData: ${groupList!!.size}")
     }
 
     companion object {

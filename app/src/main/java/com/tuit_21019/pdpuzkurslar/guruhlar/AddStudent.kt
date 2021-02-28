@@ -17,20 +17,21 @@ import com.tuit_21019.pdpuzkurslar.models.Guruh
 import com.tuit_21019.pdpuzkurslar.models.Talaba
 import kotlinx.android.synthetic.main.fragment_add_student.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.toolbar
+import kotlinx.android.synthetic.main.fragment_talaba_qoshish.view.*
 
 private const val ARG_PARAM1 = "group_to_student_add"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM2 = "edit_student"
 
 class AddStudent : Fragment() {
     // TODO: Rename and change types of parameters
     private var group: Guruh? = null
-    private var param2: String? = null
+    private var talaba: Talaba? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             group = it.getSerializable(ARG_PARAM1) as Guruh?
-            param2 = it.getString(ARG_PARAM2)
+            talaba = it.getSerializable(ARG_PARAM2) as Talaba?
         }
         db = DbHelper(this.requireContext())
     }
@@ -50,19 +51,23 @@ class AddStudent : Fragment() {
     private var timeSpinner: AddGroupSpinnerAdapter? = null
     private var groupsSpinner: AddGroupSpinnerAdapter? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.fragment_add_student, container, false)
-        Log.d("AAAA", "groupid: ${group?.guruh_nomi}")
+
+        if (talaba != null) {
+            root.add_student_save.text = "O'zgartirish"
+        }
         setToolbar()
         loadData()
         loadSpinners()
         loadDataToView()
         calendarClick()
-
         onSaveClick()
+
         return root
     }
 
@@ -81,25 +86,38 @@ class AddStudent : Fragment() {
                 && studentStartLessonTime.isNotEmpty()
                 && !days.equals("Kunlari", true)
             ) {
-
-                db?.insertTalaba(
-                    Talaba(
-                        studentName,
-                        studentSurname,
-                        studentPatronomic,
-                        studentStartLessonTime,
-                        group?.mentor_id,
-                        days,
-                        group?.dars_vaqti,
-                        group?.id
+                if (talaba == null) {
+                    db?.insertTalaba(
+                        Talaba(
+                            studentName,
+                            studentSurname,
+                            studentPatronomic,
+                            studentStartLessonTime,
+                            group?.mentor_id,
+                            days,
+                            group?.dars_vaqti,
+                            group?.id
+                        )
                     )
-                )
+                } else {
+                    db?.updateTalaba(
+                        Talaba(
+                            talaba?.id,
+                            studentName,
+                            studentSurname,
+                            studentPatronomic,
+                            studentStartLessonTime,
+                            group?.mentor_id,
+                            days,
+                            group?.dars_vaqti,
+                            group?.id
+                        )
+                    )
+                }
                 findNavController().popBackStack()
             } else {
-                Snackbar.make(root,"Barcha maydonlarni to'ldiring",Snackbar.LENGTH_LONG).show()
+                Snackbar.make(root, "Barcha maydonlarni to'ldiring", Snackbar.LENGTH_LONG).show()
             }
-
-
         }
     }
 
@@ -117,6 +135,12 @@ class AddStudent : Fragment() {
     }
 
     private fun loadDataToView() {
+        if (talaba != null) {
+            root.add_student_surname.setText(talaba?.talaba_familyasi)
+            root.add_student_name.setText(talaba?.talaba_ismi)
+            root.add_student_patronomic.setText(talaba?.talaba_otasining_ismi)
+            root.add_student_start_time.setText(talaba?.dars_boshlash_vaqti)
+        }
         root.add_student_mentor.adapter = mentorSpinner
         root.add_student_days.adapter = daysSpinner
         root.add_student_time.adapter = timeSpinner
@@ -124,7 +148,11 @@ class AddStudent : Fragment() {
     }
 
     private fun setToolbar() {
-        root.toolbar.title = "Talaba qo'shish"
+        if (talaba == null) {
+            root.toolbar.title = "Talaba qo'shish"
+        } else {
+            root.toolbar.title = "Talabani o'zgartirish"
+        }
         root.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -136,6 +164,17 @@ class AddStudent : Fragment() {
 
         daysSpinner = AddGroupSpinnerAdapter()
         daysSpinner?.setAdapter(daysList!!, root.context)
+        if (talaba != null) {
+            var position = 1
+            for (i in 0 until daysList!!.size) {
+                if (daysList!![i].equals(talaba?.kunlar, true)) {
+                    position = i
+                }
+            }
+            Log.d("AAAA", "loadSpinners: ${position}")
+//            root.add_student_days.setSelection(position,true)
+            root.add_student_days.setSelection(daysList!!.indexOf(talaba?.kunlar.toString()),true)
+        }
 
         timeSpinner = AddGroupSpinnerAdapter()
         timeSpinner?.setAdapter(timeList!!, root.context)
@@ -145,8 +184,8 @@ class AddStudent : Fragment() {
     }
 
     private fun loadData() {
-        mentorList = ArrayList()
         daysList = ArrayList()
+        mentorList = ArrayList()
         timeList = ArrayList()
         groupList = ArrayList()
 
@@ -161,17 +200,27 @@ class AddStudent : Fragment() {
         daysList?.add("Toq kunlar")
 
         timeList?.add(group?.dars_vaqti.toString())
-
         groupList?.add(group?.guruh_nomi.toString())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (talaba != null) {
+            if (talaba?.kunlar.equals("Juft kunlar", true)) {
+                root.add_student_days.setSelection(1)
+            }else if (talaba?.kunlar.equals("Toq kunlar", true)) {
+                root.add_student_days.setSelection(2)
+            }
+        }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(group: String, param2: String) =
+        fun newInstance(group: String, talaba: String) =
             AddStudent().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, group)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM2, talaba)
                 }
             }
     }

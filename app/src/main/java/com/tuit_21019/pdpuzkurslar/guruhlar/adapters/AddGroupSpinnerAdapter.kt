@@ -54,27 +54,4 @@ class AddGroupSpinnerAdapter :BaseAdapter() {
     override fun isEnabled(position: Int): Boolean {
         return position != 0
     }
-
-//    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-//        val view = super.getDropDownView(position, convertView, parent)
-//        val tv = view as TextView
-//        if (position == 0) {
-//            // Set the hint text color gray
-//            tv.setTextColor(Color.GRAY)
-//        } else {
-//            tv.setTextColor(Color.BLACK)
-//        }
-//        return view
-//    }
-
-    fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        val selectedItemText = parent.getItemAtPosition(position) as String
-        // If user change the default selection
-        // First item is disable and it is used for hint
-        Toast.makeText(context, "Selected", Toast.LENGTH_SHORT).show()
-        if (position > 0) {
-            // Notify the selected item text
-            Toast.makeText(context, "Selected", Toast.LENGTH_SHORT).show()
-        }
-    }
 }

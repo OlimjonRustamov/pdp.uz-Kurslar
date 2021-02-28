@@ -56,8 +56,49 @@ class GroupItemFragment : Fragment() {
         deleteItemClick()
         addClick()
         itemEditClick()
+        startLessonClick()
 
         return root
+    }
+
+    private fun startLessonClick() {
+        if (group?.ochilganligi == 0) {
+            root.item_group_start_lesson.setOnClickListener {
+
+                if (studentList!!.isNotEmpty()) {
+                    val dialog = AlertDialog.Builder(root.context)
+                    dialog.setTitle("Darsni boshlash")
+                    dialog.setCancelable(false)
+                    dialog.setMessage("Rostdan ham guruhga darsni boshlamoqchimisiz?")
+                    dialog.setPositiveButton("Ha", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            db?.updateGuruh(
+                                Guruh(
+                                    group?.id,
+                                    group?.guruh_nomi,
+                                    group?.mentor_id,
+                                    1,
+                                    group?.kurs_id,
+                                    group?.dars_vaqti
+                                )
+                            )
+                            p0?.cancel()
+                            findNavController().popBackStack()
+                        }
+                    })
+                    dialog.setNegativeButton("Orqaga", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            p0?.cancel()
+                        }
+                    })
+                    dialog.show()
+                } else {
+                    Toast.makeText(root.context, "Avval talaba qo'shing!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+            }
+        }
     }
 
     private fun itemEditClick() {
@@ -65,7 +106,8 @@ class GroupItemFragment : Fragment() {
             override fun onClick(talaba: Talaba, position: Int) {
                 val bundle = Bundle()
                 bundle.putSerializable("group_to_student_add", group)
-                bundle.putString("edit_student","Talabani o'zgartirish")
+                bundle.putSerializable("edit_student", talaba)
+                findNavController().navigate(R.id.addStudent,bundle)
             }
 
         })
@@ -75,7 +117,7 @@ class GroupItemFragment : Fragment() {
         root.toolbar.setOnMenuItemClickListener {
             val bundle = Bundle()
             bundle.putSerializable("group_to_student_add", group)
-            findNavController().navigate(R.id.addStudent,bundle)
+            findNavController().navigate(R.id.addStudent, bundle)
             true
         }
     }
@@ -94,7 +136,8 @@ class GroupItemFragment : Fragment() {
                     Toast.makeText(root.context, "O'chirildi", Toast.LENGTH_SHORT).show()
                 }
                 dialog.setNegativeButton("Yo'q") { p0, p1 ->
-                    p0?.cancel() }
+                    p0?.cancel()
+                }
                 dialog.show()
             }
 
@@ -125,21 +168,6 @@ class GroupItemFragment : Fragment() {
     private fun loadData() {
         studentList = ArrayList()
         studentList = db?.getAllStudentsByGroupId(group?.id!!)
-        if (db?.getAllStudentsByGroupId(group?.id!!)!!.isEmpty()) {
-
-            studentList?.add(
-                Talaba(
-                    "Olimjon",
-                    "Rustamov",
-                    "Odil o'g'li",
-                    "12/12/2021",
-                    1,
-                    "Juft",
-                    group?.dars_vaqti,
-                    group?.id
-                )
-            )
-        }
     }
 
     @SuppressLint("SetTextI18n")

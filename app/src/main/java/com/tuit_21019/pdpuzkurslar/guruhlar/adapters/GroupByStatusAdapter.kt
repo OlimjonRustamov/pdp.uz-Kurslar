@@ -20,7 +20,7 @@ class GroupByStatusAdapter(var groupList: ArrayList<Guruh>, var studentCountList
         @SuppressLint("SetTextI18n")
         fun onBind(guruh: Guruh, studentCount: Int, position: Int) {
             itemView.group_name.text = guruh.guruh_nomi
-            itemView.group_student_count.text = "O'quvchilar soni: ${studentCount.toString()}"
+            itemView.group_student_count.text = "O'quvchilar soni: $studentCount"
 
             itemView.group_view.setOnClickListener {
                 if (onViewClick != null) {
