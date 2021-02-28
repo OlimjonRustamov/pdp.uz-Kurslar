@@ -55,13 +55,24 @@ class GroupItemFragment : Fragment() {
         loadAdapters()
         deleteItemClick()
         addClick()
+        itemEditClick()
 
         return root
     }
 
+    private fun itemEditClick() {
+        adapter?.setOnEditClick(object : StudentsAdapter.OnEditClick {
+            override fun onClick(talaba: Talaba, position: Int) {
+                val bundle = Bundle()
+                bundle.putSerializable("group_to_student_add", group)
+                bundle.putString("edit_student","Talabani o'zgartirish")
+            }
+
+        })
+    }
+
     private fun addClick() {
         root.toolbar.setOnMenuItemClickListener {
-
             val bundle = Bundle()
             bundle.putSerializable("group_to_student_add", group)
             findNavController().navigate(R.id.addStudent,bundle)
