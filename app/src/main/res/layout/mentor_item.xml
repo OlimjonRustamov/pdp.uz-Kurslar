@@ -1,73 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/mentor_item_ismi"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
         android:text="Sanjar Suvonov"
         android:textColor="#000"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="24dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:textSize="24sp"
-        app:layout_constraintRight_toLeftOf="@id/mentor_edit_btn"
-        android:layout_width="0dp"
         app:layout_constraintBottom_toTopOf="@id/mentor_item_otasining_ismi"
-        android:layout_height="32dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/mentor_edit_btn"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/mentor_item_otasining_ismi"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="24dp"
         android:text="Shuhrat o'g'li"
         android:textColor="#000"
-        app:layout_constraintTop_toBottomOf="@id/mentor_item_ismi"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/line_hr"
-        android:layout_marginLeft="24dp"
         android:textSize="20sp"
-        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@id/line_hr"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/mentor_edit_btn"
-        android:layout_height="28dp" />
+        app:layout_constraintTop_toBottomOf="@id/mentor_item_ismi" />
 
-    <ImageView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/mentor_delete_btn"
-        android:background="@drawable/edit_bg"
-        android:padding="12dp"
-        android:layout_marginRight="10dp"
-        android:clickable="true"
-        android:layout_marginTop="24dp"
-        android:foreground="?selectableItemBackground"
-        android:focusable="true"
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/mentor_edit_btn"
-        android:layout_width="50dp"
-        android:src="@drawable/edit"
-        android:layout_height="50dp" />
-    <ImageView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/delete_bg"
-        android:padding="12dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:foreground="?selectableItemBackground"
-        android:layout_marginRight="24dp"
-        android:focusable="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/grp_btns_back"
+        android:backgroundTint="#FFB800"
+        android:src="@drawable/ic_pencil"
+        app:layout_constraintRight_toLeftOf="@id/mentor_delete_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/mentor_delete_btn"
-        android:layout_width="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/delete_icon"
-        android:layout_height="50dp" />
+        android:background="@drawable/grp_btns_back"
+        android:backgroundTint="#FF0000"
+        android:src="@drawable/ic_trash"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mentor_edit_btn"
-        android:layout_marginTop="8dp"
-        android:background="#DBDBDB"
         android:id="@+id/line_hr"
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="#DBDBDB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mentor_item_otasining_ismi" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

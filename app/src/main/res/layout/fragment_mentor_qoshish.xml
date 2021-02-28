@@ -49,7 +49,7 @@
             android:id="@+id/add_mentor_ismi_et"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textSize="26sp"
+            android:textSize="18sp"
             android:paddingTop="10dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
@@ -71,7 +71,6 @@
         app:errorEnabled="true"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="10dp"
         app:errorTextColor="#ff0000"
         app:helperTextTextColor="@color/main_color"
         app:hintTextColor="@color/main_color"
@@ -83,12 +82,7 @@
             android:id="@+id/add_mentor_familyasi_et"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textSize="26sp"
-            android:paddingTop="10dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:paddingBottom="10dp"
-            android:layout_margin="0dp"
+            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/darker_gray"
             android:textCursorDrawable="@drawable/cursor_color" />
@@ -105,7 +99,6 @@
         app:errorEnabled="true"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="10dp"
         app:errorTextColor="#ff0000"
         app:helperTextTextColor="@color/main_color"
         app:hintTextColor="@color/main_color"
@@ -117,20 +110,17 @@
             android:id="@+id/add_mentor_otasining_ismi_et"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textSize="26sp"
-            android:paddingTop="10dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:paddingBottom="10dp"
-            android:layout_margin="0dp"
+            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/darker_gray"
             android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:text="Qo'shish"
         android:textColor="#fff"
+        android:background="@drawable/grp_btns_back"
+        android:backgroundTint="@color/main_color"
         android:textSize="20sp"
         android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,4 +131,5 @@
         android:layout_marginBottom="40dp"
         android:layout_width="160dp"
         android:layout_height="60dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
