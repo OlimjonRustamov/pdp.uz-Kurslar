@@ -57,7 +57,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_tabala_ismi_et"
+                    android:id="@+id/add_talaba_ismi_et"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:textSize="26sp"
@@ -137,12 +137,13 @@
                     android:textColorHint="@android:color/darker_gray"
                     android:textCursorDrawable="@drawable/cursor_color" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout4"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:hint="12/21/2021"
+                android:hint="Dars boshlash vaqti"
                 android:textColorHint="@android:color/black"
                 app:boxStrokeColor="@color/main_color"
                 app:boxStrokeWidthFocused="1.5dp"
@@ -170,6 +171,18 @@
                     android:textColorHint="@android:color/darker_gray"
                     android:textCursorDrawable="@drawable/cursor_color" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/add_talaba_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintBottom_toBottomOf="@id/layout4"
+                app:layout_constraintRight_toRightOf="@id/layout4"
+                app:layout_constraintTop_toTopOf="@id/layout4" />
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/add_student_add_mentor"

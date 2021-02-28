@@ -1,5 +1,7 @@
 package com.tuit_21019.pdpuzkurslar.kurslar
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +12,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
-import com.tuit_21019.pdpuzkurslar.models.Guruh
 import com.tuit_21019.pdpuzkurslar.models.Kurs
-import kotlinx.android.synthetic.main.fragment_add_group.view.*
-import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.*
+import com.tuit_21019.pdpuzkurslar.models.Talaba
+import kotlinx.android.synthetic.main.fragment_add_student.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.toolbar
-import kotlinx.android.synthetic.main.fragment_kurshaqida.view.*
 import kotlinx.android.synthetic.main.fragment_talaba_qoshish.view.*
 
 private const val ARG_PARAM1 = "kurs"
@@ -48,12 +48,15 @@ class TalabaQoshishFragment : Fragment() {
     ): View {
         root = inflater.inflate(R.layout.fragment_talaba_qoshish, container, false)
 
-        setToolbar_tv()
+        setToolbartv()
         loadData()
         loadMentors()
         loadTime()
         loadKunlar()
         loadGuruhlar()
+        calendarClick()
+
+        addStudentClick()
         return root
     }
 
@@ -67,15 +70,11 @@ class TalabaQoshishFragment : Fragment() {
             }
     }
 
-    private fun setToolbar_tv() {
+    private fun setToolbartv() {
         root.toolbar.title = param1!!.kurs_nomi
 
         root.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
-        }
-
-        root.add_student_btn.setOnClickListener {
-            Snackbar.make(root,"Zerikmay turing",Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -128,5 +127,51 @@ class TalabaQoshishFragment : Fragment() {
         guruhlarAdapter = AddGroupSpinnerAdapter()
         guruhlarAdapter!!.setAdapter(guruhlar!!, root.context)
         root.add_student_add_guruhlar.adapter=guruhlarAdapter
+    }
+
+    @SuppressLint("NewApi")
+    private fun calendarClick() {
+        root.add_talaba_calendar.setOnClickListener {
+            val dialog = DatePickerDialog(root.context)
+
+            dialog.datePicker.setOnDateChangedListener { datePicker, year, month, day ->
+                root.add_talaba_boshlash_vaqti_et.setText("$day/${month + 1}/$year")
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+    }
+
+    private fun addStudentClick() {
+
+        root.add_student_btn.setOnClickListener {
+            val talaba_ismi=root.add_talaba_ismi_et.text.toString().trim()
+            val talaba_familyasi=root.add_talaba_familyasi_et.text.toString().trim()
+            val talaba_otasining_ismi=root.add_talaba_otasining_ismi_et.text.toString().trim()
+            val dars_boshlash_vaqti=root.add_talaba_boshlash_vaqti_et.text.toString().trim()
+            val t_kunlar=kunlar!![root.add_student_add_kunlar.selectedItemPosition]
+            val dars_vaqti=time!![root.add_student_add_time.selectedItemPosition]
+
+            //spinnerni positionini tekshirdim
+            //agar 0 selected bo'lsa 0 ketdi. 0 bo'lmasa position-1 dagi elementni berib yubordim
+            var mentor_id = 0
+            if (root.add_student_add_mentor.selectedItemPosition==0) { mentor_id=0 } else {
+                mentor_id=db!!.getAllMentorsByKursId(param1!!.id!!)[root.add_student_add_mentor.selectedItemPosition-1].id!!
+            }
+            var guruh_id = 0
+            if (root.add_student_add_guruhlar.selectedItemPosition == 0) { guruh_id = 0 } else {
+                guruh_id=db!!.getAllGroupsByKursId(param1!!.id!!)[root.add_student_add_guruhlar.selectedItemPosition - 1].id!!
+            }
+
+
+            if (talaba_ismi != "" && talaba_familyasi != "" && talaba_otasining_ismi != "" && dars_boshlash_vaqti != ""
+                && mentor_id != 0 && t_kunlar != "Kunlar" && dars_vaqti != "Vaqti" && guruh_id != 0) {
+                db!!.insertTalaba(Talaba(talaba_ismi,talaba_familyasi,talaba_otasining_ismi,dars_boshlash_vaqti,mentor_id,t_kunlar,dars_vaqti,guruh_id))
+                Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            }else {
+                Snackbar.make(root,"Barcha maydonlarni to'ldiring!",Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 }
