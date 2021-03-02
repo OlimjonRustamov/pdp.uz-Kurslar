@@ -81,8 +81,6 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "pdpuz_kurslar", nu
 
     override fun deleteMentor(mentor: Mentor) {
         val db = this.writableDatabase
-        db.delete("talabalar", "mentor_id=?", arrayOf("${mentor.id}"))
-        db.delete("guruhlar", "mentor_id=?", arrayOf("${mentor.id}"))
         db.delete("mentorlar", "id=?", arrayOf("${mentor.id}"))
         db.close()
     }
@@ -286,6 +284,55 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "pdpuz_kurslar", nu
         val db = this.writableDatabase
         db.delete("talabalar", "id=?", arrayOf("${talaba_id}"))
         db.close()
+    }
+
+    override fun getAllStudentsByMentorId(mentor_id: Int): ArrayList<Talaba> {
+        val db = this.readableDatabase
+        val studentsByMentorId = ArrayList<Talaba>()
+        val cursor = db.rawQuery("select * from talabalar where mentor_id=$mentor_id", null)
+        if (cursor.moveToFirst()) {
+            do {
+                studentsByMentorId.add(
+                    Talaba(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getInt(5),
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        cursor.getInt(8)
+                    )
+                )
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return studentsByMentorId
+    }
+
+    override fun getAllGroupsByMentorId(mentor_id: Int): ArrayList<Guruh> {
+        val db = this.readableDatabase
+        val groupByIdList = ArrayList<Guruh>()
+        val cursor = db.rawQuery("select * from guruhlar where mentor_id=$mentor_id", null)
+        if (cursor.moveToFirst()) {
+            do {
+                groupByIdList.add(
+                    Guruh(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5)
+                    )
+                )
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return groupByIdList
     }
 
 }

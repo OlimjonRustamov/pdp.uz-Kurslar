@@ -46,4 +46,8 @@ interface DbMethods {
     fun updateTalaba(updated: Talaba)
 
     fun deleteTalaba(talaba_id: Int)
+
+    fun getAllStudentsByMentorId(mentor_id:Int):ArrayList<Talaba>
+
+    fun getAllGroupsByMentorId(mentor_id: Int): ArrayList<Guruh>
 }
