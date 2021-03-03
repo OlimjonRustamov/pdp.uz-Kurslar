@@ -17,7 +17,6 @@ import com.tuit_21019.pdpuzkurslar.models.Guruh
 import com.tuit_21019.pdpuzkurslar.models.Talaba
 import kotlinx.android.synthetic.main.fragment_add_student.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.toolbar
-import kotlinx.android.synthetic.main.fragment_talaba_qoshish.view.*
 
 private const val ARG_PARAM1 = "group_to_student_add"
 private const val ARG_PARAM2 = "edit_student"
@@ -76,7 +75,7 @@ class AddStudent : Fragment() {
             val studentName = root.add_student_surname.text.toString()
             val studentSurname = root.add_student_name.text.toString()
             val studentPatronomic = root.add_student_patronomic.text.toString()
-            val studentStartLessonTime = root.add_student_start_time.text.toString()
+            val studentStartLessonTime = root.layout4.text.toString()
             val days = daysList!![root.add_student_days.selectedItemPosition]
 
             if (
@@ -127,7 +126,16 @@ class AddStudent : Fragment() {
             val dialog = DatePickerDialog(root.context)
 
             dialog.datePicker.setOnDateChangedListener { datePicker, year, month, day ->
-                root.add_student_start_time.setText("$day/${month + 1}/$year")
+                root.layout4.setText("$day/${month + 1}/$year")
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+        root.layout4.setOnClickListener {
+            val dialog = DatePickerDialog(root.context)
+
+            dialog.datePicker.setOnDateChangedListener { datePicker, year, month, day ->
+                root.layout4.setText("$day/${month + 1}/$year")
                 dialog.dismiss()
             }
             dialog.show()
@@ -139,7 +147,7 @@ class AddStudent : Fragment() {
             root.add_student_surname.setText(talaba?.talaba_familyasi)
             root.add_student_name.setText(talaba?.talaba_ismi)
             root.add_student_patronomic.setText(talaba?.talaba_otasining_ismi)
-            root.add_student_start_time.setText(talaba?.dars_boshlash_vaqti)
+            root.layout4.setText(talaba?.dars_boshlash_vaqti)
         }
         root.add_student_mentor.adapter = mentorSpinner
         root.add_student_days.adapter = daysSpinner

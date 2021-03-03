@@ -1,221 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".guruhlar.AddStudent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".guruhlar.AddStudent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbarlayout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:backgroundTint="@color/main_color"
-                app:navigationIcon="?attr/homeAsUpIndicator"
-                app:theme="@style/ToolbarColoredBackArrow"
-                app:title="Talaba qo'shish"
-                app:titleTextColor="@android:color/white" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
-            android:hint="Familiyasi"
-            android:textColorHint="@android:color/black"
-            app:boxStrokeColor="@color/main_color"
-            app:boxStrokeWidthFocused="1.5dp"
-            app:errorEnabled="true"
-            app:errorTextColor="#ff0000"
-            app:helperTextTextColor="@color/main_color"
-            app:hintTextColor="@color/main_color"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbarlayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_student_surname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout2"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ismi"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:textColorHint="@android:color/black"
-            app:boxStrokeColor="@color/main_color"
-            app:boxStrokeWidthFocused="1.5dp"
-            app:errorEnabled="true"
-            app:errorTextColor="#ff0000"
-            app:helperTextTextColor="@color/main_color"
-            app:hintTextColor="@color/main_color"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_student_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout3"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Otasining ismi"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:textColorHint="@android:color/black"
-            app:boxStrokeColor="@color/main_color"
-            app:boxStrokeWidthFocused="1.5dp"
-            app:errorEnabled="true"
-            app:errorTextColor="#ff0000"
-            app:helperTextTextColor="@color/main_color"
-            app:hintTextColor="@color/main_color"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_student_patronomic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout4"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Sana"
-            android:textColorHint="@android:color/black"
-            app:boxStrokeColor="@color/main_color"
-            app:boxStrokeWidthFocused="1.5dp"
-            app:errorEnabled="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:errorTextColor="#ff0000"
-            app:helperTextTextColor="@color/main_color"
-            app:hintTextColor="@color/main_color"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout3">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_student_start_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="18sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/add_student_calendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="15dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_calendar"
-            app:layout_constraintBottom_toBottomOf="@id/layout4"
-            app:layout_constraintRight_toRightOf="@id/layout4"
-            app:layout_constraintTop_toTopOf="@id/layout4" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_student_mentor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/spinner_back"
-            app:layout_constraintTop_toBottomOf="@id/layout4" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_student_days"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/spinner_back"
-            app:layout_constraintTop_toBottomOf="@id/add_student_mentor" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_student_time"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/spinner_back"
-            app:layout_constraintTop_toBottomOf="@id/add_student_days" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_student_group"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/spinner_back"
-            app:layout_constraintTop_toBottomOf="@id/add_student_time" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/add_student_save"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/grp_btns_back"
+            android:layout_height="?attr/actionBarSize"
             android:backgroundTint="@color/main_color"
-            android:text="Saqlash"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_student_group" />
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:theme="@style/ToolbarColoredBackArrow"
+            app:title="Talaba qo'shish"
+            app:titleTextColor="@android:color/white" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@id/appbarlayout"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Familiyasi"
+                android:textColorHint="@android:color/darker_gray"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appbarlayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ismi"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textColorHint="@android:color/darker_gray"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Otasining ismi"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textColorHint="@android:color/darker_gray"
+                app:boxStrokeColor="@color/main_color"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:errorEnabled="true"
+                app:errorTextColor="#ff0000"
+                app:helperTextTextColor="@color/main_color"
+                app:hintTextColor="@color/main_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_patronomic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/layout4"
+                app:layout_constraintTop_toBottomOf="@id/layout3"
+                android:layout_width="match_parent"
+                android:textSize="24sp"
+                android:textColor="#000"
+                android:gravity="center"
+                android:text="12/12/2020"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@drawable/spinner_back"
+                android:layout_height="60dp">
+            </TextView>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/add_student_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintBottom_toBottomOf="@id/layout4"
+                app:layout_constraintRight_toRightOf="@id/layout4"
+                app:layout_constraintTop_toTopOf="@id/layout4" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_mentor"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/layout4" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_days"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/add_student_mentor" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_time"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/add_student_days" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/add_student_group"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/spinner_back"
+                app:layout_constraintTop_toBottomOf="@id/add_student_time" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_student_save"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/grp_btns_back"
+                android:backgroundTint="@color/main_color"
+                android:text="Saqlash"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_student_group" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-</ScrollView>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

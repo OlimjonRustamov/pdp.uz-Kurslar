@@ -14,7 +14,6 @@ import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
 import com.tuit_21019.pdpuzkurslar.models.Kurs
 import com.tuit_21019.pdpuzkurslar.models.Talaba
-import kotlinx.android.synthetic.main.fragment_add_student.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.toolbar
 import kotlinx.android.synthetic.main.fragment_talaba_qoshish.view.*
 
@@ -135,7 +134,16 @@ class TalabaQoshishFragment : Fragment() {
             val dialog = DatePickerDialog(root.context)
 
             dialog.datePicker.setOnDateChangedListener { datePicker, year, month, day ->
-                root.add_talaba_boshlash_vaqti_et.setText("$day/${month + 1}/$year")
+                root.layout4.text="$day/${month + 1}/$year"
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+        root.layout4.setOnClickListener{
+            val dialog = DatePickerDialog(root.context)
+
+            dialog.datePicker.setOnDateChangedListener { datePicker, year, month, day ->
+                root.layout4.text="$day/${month + 1}/$year"
                 dialog.dismiss()
             }
             dialog.show()
@@ -148,7 +156,7 @@ class TalabaQoshishFragment : Fragment() {
             val talaba_ismi=root.add_talaba_ismi_et.text.toString().trim()
             val talaba_familyasi=root.add_talaba_familyasi_et.text.toString().trim()
             val talaba_otasining_ismi=root.add_talaba_otasining_ismi_et.text.toString().trim()
-            val dars_boshlash_vaqti=root.add_talaba_boshlash_vaqti_et.text.toString().trim()
+            val dars_boshlash_vaqti=root.layout4.text.toString().trim()
             val t_kunlar=kunlar!![root.add_student_add_kunlar.selectedItemPosition]
             val dars_vaqti=time!![root.add_student_add_time.selectedItemPosition]
 

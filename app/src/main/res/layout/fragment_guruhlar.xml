@@ -9,16 +9,21 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:outlineSpotShadowColor="@color/main_color"
+        android:outlineAmbientShadowColor="@color/main_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/appbarlayout"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:targetApi="p">
 
         <androidx.appcompat.widget.Toolbar
             app:title="Android Development"
             app:titleTextColor="@android:color/white"
             android:id="@+id/toolbar"
             app:navigationIcon="?attr/homeAsUpIndicator"
+            android:outlineSpotShadowColor="@color/main_color"
+            android:outlineAmbientShadowColor="@color/main_color"
             app:menu="@menu/add_button"
             android:layout_width="match_parent"
             app:theme="@style/ToolbarColoredBackArrow"

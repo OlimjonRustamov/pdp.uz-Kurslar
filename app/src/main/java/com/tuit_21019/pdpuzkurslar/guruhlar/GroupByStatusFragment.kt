@@ -97,22 +97,27 @@ class GroupByStatusFragment : Fragment() {
     private fun onItemDeleteClick() {
         adapter?.setOnDeleteClick(object : GroupByStatusAdapter.OnDeleteClick {
             override fun onClick(guruh: Guruh, position: Int) {
-                val dialog = AlertDialog.Builder(root.context)
-                dialog.setTitle("Guruhni o'chirish")
-                dialog.setMessage("Diqqat! Ushbu guruh o'chirilganda unga tegishli bo'lgan barcha talabalar ham o'chirib yuboriladi!")
-                dialog.setNegativeButton(
-                    "Bekor qilish"
-                ) { dialog, which -> dialog?.cancel() }
-                dialog.setPositiveButton(
-                    "O'chirish"
-                ) { dialog, which ->
 
-                    db?.deleteGuruh(guruh)
-                    adapter?.notifyItemRemoved(position)
-                    adapter?.groupList = db!!.getAllGroupByStatus(status)
-                    dialog!!.cancel()
+                if (db!!.getAllStudentsByGroupId(guruh.id!!).size == 0) {
+                    val dialog = AlertDialog.Builder(root.context)
+                    dialog.setTitle("Guruhni o'chirish")
+                    dialog.setMessage("Diqqat! Ushbu guruh to'liqligicha o'chirib yuboriladi!")
+                    dialog.setNegativeButton(
+                        "Bekor qilish"
+                    ) { dialog, which -> dialog?.cancel() }
+                    dialog.setPositiveButton(
+                        "O'chirish"
+                    ) { dialog, which ->
+
+                        db?.deleteGuruh(guruh)
+                        adapter?.notifyItemRemoved(position)
+                        adapter?.groupList = db!!.getAllGroupByStatus(status)
+                        dialog!!.cancel()
+                    }
+                    dialog.show()
+                } else {
+                    Snackbar.make(root,"Ushbu guruhni o'chirish mumkin emas!",Snackbar.LENGTH_LONG).show()
                 }
-                dialog.show()
             }
         })
     }
