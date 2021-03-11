@@ -3,14 +3,14 @@ package com.tuit_21019.pdpuzkurslar.guruhlar
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.GroupByStatusAdapter
 import com.tuit_21019.pdpuzkurslar.guruhlar.dialogs.EditGroupItemDialog
@@ -33,11 +33,13 @@ class GroupByStatusFragment : Fragment() {
             param1 = it.getInt(ARG_PARAM1)
             param2 = it.getInt(ARG_PARAM2)
         }
-        db = DbHelper(this.context!!)
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     lateinit var root: View
-    private var db: DbHelper? = null
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
     private var groupList: ArrayList<Guruh>? = null
     private var studentCountList: ArrayList<Int>? = null
     private var adapter: GroupByStatusAdapter? = null
@@ -73,7 +75,7 @@ class GroupByStatusFragment : Fragment() {
 
                 val mentors = ArrayList<Mentor>()
                 mentors.add(Mentor("Mentorni tanlang", "", "", param2))
-                mentors.addAll(db!!.getAllMentorsByKursId(param2!!))
+                mentors.addAll(getDao!!.getAllMentorsByKursId(param2!!))
 
                 val beginTransaction = childFragmentManager.beginTransaction()
                 val dialog = EditGroupItemDialog.newInstance(guruh, mentors)
@@ -81,9 +83,16 @@ class GroupByStatusFragment : Fragment() {
 
                 dialog.setOnEditClick(object : EditGroupItemDialog.OnEditClick {
                     override fun onClick(guruh: Guruh) {
-                        db?.updateGuruh(guruh)
+                        getDao?.updateGuruh(
+                            guruh.id!!,
+                            guruh.guruh_nomi.toString(),
+                            guruh.mentor_id!!,
+                            guruh.ochilganligi!!,
+                            guruh.kurs_id!!,
+                            guruh.dars_vaqti.toString()
+                        )
 
-                        adapter?.groupList = db!!.getAllGroupByStatus(status)
+                        adapter?.groupList = getDao!!.getAllGroupByStatus(status) as ArrayList
                         adapter?.notifyItemChanged(position)
                         Snackbar.make(root, "Muvaffaqiyatli o'zgartirildi", Snackbar.LENGTH_LONG)
                             .show()
@@ -98,7 +107,7 @@ class GroupByStatusFragment : Fragment() {
         adapter?.setOnDeleteClick(object : GroupByStatusAdapter.OnDeleteClick {
             override fun onClick(guruh: Guruh, position: Int) {
 
-                if (db!!.getAllStudentsByGroupId(guruh.id!!).size == 0) {
+                if (getDao!!.getAllStudentsByGroupId(guruh.id!!).size == 0) {
                     val dialog = AlertDialog.Builder(root.context)
                     dialog.setTitle("Guruhni o'chirish")
                     dialog.setMessage("Diqqat! Ushbu guruh to'liqligicha o'chirib yuboriladi!")
@@ -109,14 +118,18 @@ class GroupByStatusFragment : Fragment() {
                         "O'chirish"
                     ) { dialog, which ->
 
-                        db?.deleteGuruh(guruh)
+                        getDao?.deleteGuruh(guruh)
                         adapter?.notifyItemRemoved(position)
-                        adapter?.groupList = db!!.getAllGroupByStatus(status)
+                        adapter?.groupList = getDao!!.getAllGroupByStatus(status) as ArrayList
                         dialog!!.cancel()
                     }
                     dialog.show()
                 } else {
-                    Snackbar.make(root,"Ushbu guruhni o'chirish mumkin emas!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        root,
+                        "Ushbu guruhni o'chirish mumkin emas!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
             }
         })
@@ -136,11 +149,11 @@ class GroupByStatusFragment : Fragment() {
         }
 
         groupList = ArrayList()
-        groupList = db?.getGroupByKursIdAndStatus(status, param2!!)
+        groupList = getDao?.getGroupByKursIdAndStatus(status, param2!!) as ArrayList
 
         studentCountList = ArrayList()
         for (i in 0 until groupList!!.size) {
-            studentCountList?.add(db?.getAllStudentsByGroupId(groupList!![i].id!!)!!.size)
+            studentCountList?.add(getDao?.getAllStudentsByGroupId(groupList!![i].id!!)!!.size)
         }
     }
 

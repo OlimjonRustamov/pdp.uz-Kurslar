@@ -10,7 +10,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
 import com.tuit_21019.pdpuzkurslar.models.Guruh
@@ -32,11 +33,11 @@ class AddStudent : Fragment() {
             group = it.getSerializable(ARG_PARAM1) as Guruh?
             talaba = it.getSerializable(ARG_PARAM2) as Talaba?
         }
-        db = DbHelper(this.requireContext())
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     lateinit var root: View
-    private var db: DbHelper? = null
     private var student: Talaba? = null
 
     private var mentorList: ArrayList<String>? = null
@@ -44,6 +45,8 @@ class AddStudent : Fragment() {
     private var timeList: ArrayList<String>? = null
     private var groupList: ArrayList<String>? = null
 
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
 
     private var mentorSpinner: AddGroupSpinnerAdapter? = null
     private var daysSpinner: AddGroupSpinnerAdapter? = null
@@ -86,7 +89,7 @@ class AddStudent : Fragment() {
                 && !days.equals("Kunlari", true)
             ) {
                 if (talaba == null) {
-                    db?.insertTalaba(
+                    getDao?.insertTalaba(
                         Talaba(
                             studentName,
                             studentSurname,
@@ -99,18 +102,16 @@ class AddStudent : Fragment() {
                         )
                     )
                 } else {
-                    db?.updateTalaba(
-                        Talaba(
-                            talaba?.id,
-                            studentName,
-                            studentSurname,
-                            studentPatronomic,
-                            studentStartLessonTime,
-                            group?.mentor_id,
-                            days,
-                            group?.dars_vaqti,
-                            group?.id
-                        )
+                    getDao?.updateTalaba(
+                        talaba?.id!!,
+                        studentName,
+                        studentSurname,
+                        studentPatronomic,
+                        studentStartLessonTime,
+                        group?.mentor_id!!,
+                        days,
+                        group?.dars_vaqti.toString(),
+                        group?.id!!
                     )
                 }
                 findNavController().popBackStack()
@@ -181,7 +182,7 @@ class AddStudent : Fragment() {
             }
             Log.d("AAAA", "loadSpinners: ${position}")
 //            root.add_student_days.setSelection(position,true)
-            root.add_student_days.setSelection(daysList!!.indexOf(talaba?.kunlar.toString()),true)
+            root.add_student_days.setSelection(daysList!!.indexOf(talaba?.kunlar.toString()), true)
         }
 
         timeSpinner = AddGroupSpinnerAdapter()
@@ -198,7 +199,7 @@ class AddStudent : Fragment() {
         groupList = ArrayList()
 
         mentorList?.add(
-            db?.getMentorByID(group?.mentor_id!!)?.mentor_nomi + " " + db?.getMentorByID(
+            getDao?.getMentorByID(group?.mentor_id!!)?.mentor_nomi + " " + getDao?.getMentorByID(
                 group?.mentor_id!!
             )?.mentor_familyasi
         )
@@ -216,7 +217,7 @@ class AddStudent : Fragment() {
         if (talaba != null) {
             if (talaba?.kunlar.equals("Juft kunlar", true)) {
                 root.add_student_days.setSelection(1)
-            }else if (talaba?.kunlar.equals("Toq kunlar", true)) {
+            } else if (talaba?.kunlar.equals("Toq kunlar", true)) {
                 root.add_student_days.setSelection(2)
             }
         }

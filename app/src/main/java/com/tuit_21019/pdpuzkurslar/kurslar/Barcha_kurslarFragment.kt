@@ -12,7 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.adapters.KurslarAdapter
 import com.tuit_21019.pdpuzkurslar.models.Kurs
@@ -25,7 +26,9 @@ private const val ARG_PARAM1 = "navigation"
 class Barcha_kurslarFragment : Fragment() {
     private var param1: String? = null
 
-    lateinit var db: DbHelper
+
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
 
     lateinit var root: View
     lateinit var kurslarAdapter: KurslarAdapter
@@ -36,25 +39,23 @@ class Barcha_kurslarFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
         }
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
         @SuppressLint("UseRequireInsteadOfGet")
-        db = DbHelper(this.context!!)
+
 
         root = inflater.inflate(R.layout.fragment_barcha_kurslar, container, false)
 
         setToolbar()
         loadData()
-        kurslarList = db.getAllKurs()
 
-        kurslarAdapter = KurslarAdapter(kurslarList)
-        root.kurslar_recyclerview.adapter = kurslarAdapter
-        root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
 
         setMyItemClick()
 
@@ -62,17 +63,22 @@ class Barcha_kurslarFragment : Fragment() {
     }
 
     private fun loadData() {
+        kurslarList = ArrayList()
+        kurslarList = getDao?.getAllKurs() as ArrayList
 
+        kurslarAdapter = KurslarAdapter(kurslarList)
+        root.kurslar_recyclerview.adapter = kurslarAdapter
+        root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
     }
 
     companion object {
         @JvmStatic
         fun newInstance(param1: String) =
-                Barcha_kurslarFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                    }
+            Barcha_kurslarFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
                 }
+            }
     }
 
     private fun setToolbar() {
@@ -91,21 +97,30 @@ class Barcha_kurslarFragment : Fragment() {
         root.toolbar.setOnMenuItemClickListener { item ->
             if (item?.itemId == R.id.add_menu_btn) {
                 val dialog = AlertDialog.Builder(root.context)
-                val view = LayoutInflater.from(root.context).inflate(R.layout.add_kurs_dialog, null, false)
+                val view =
+                    LayoutInflater.from(root.context).inflate(R.layout.add_kurs_dialog, null, false)
                 dialog.setView(view)
                 dialog.setPositiveButton("Qo'shish", object : DialogInterface.OnClickListener {
                     override fun onClick(dialog: DialogInterface?, which: Int) {
                         val kurs_nomi_et = view.add_kurs_dialog_et.text.toString()
-                        val kurs_haqida_et=view.add_kurs_dialog__description.text.toString()
-                        if (kurs_nomi_et.trim() != ""&&kurs_haqida_et.trim()!="") {
-                            val id=db.insertKurs(Kurs(kurs_nomi_et,kurs_haqida_et))
+                        val kurs_haqida_et = view.add_kurs_dialog__description.text.toString()
+                        if (kurs_nomi_et.trim() != "" && kurs_haqida_et.trim() != "") {
+                            getDao?.insertKurs(Kurs(kurs_nomi_et, kurs_haqida_et))
                             dialog?.cancel()
-                            Snackbar.make(root,"Muvaffaqiyatli qo'shildi!",Snackbar.LENGTH_LONG).show()
-                            kurslarList.add(Kurs(id.toInt(),kurs_nomi_et,kurs_haqida_et))
+                            Snackbar.make(root, "Muvaffaqiyatli qo'shildi!", Snackbar.LENGTH_LONG)
+                                .show()
+                            loadData()
                             kurslarAdapter.notifyItemInserted(kurslarList.size - 1)
-                            kurslarAdapter.notifyItemRangeChanged(kurslarList.size - 1, kurslarList.size)
+                            kurslarAdapter.notifyItemRangeChanged(
+                                kurslarList.size - 1,
+                                kurslarList.size
+                            )
                         } else {
-                            Toast.makeText(root.context, "Barcha maydonlarni to'ldiring", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                root.context,
+                                "Barcha maydonlarni to'ldiring",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 })

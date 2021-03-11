@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter2
@@ -36,7 +35,6 @@ class EditGroupItemDialog : DialogFragment() {
     private var mentors: ArrayList<String>? = null
     private var time: ArrayList<String>? = null
     private var onEditClick: OnEditClick? = null
-    private var db: DbHelper? = null
     private var mentorID = 0
     private var kursID = 0
 
@@ -45,7 +43,7 @@ class EditGroupItemDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.edit_group_item_dialog, container, false)
-        isCancelable=false
+        isCancelable = false
 
         loadData()
         loadDataToView()
@@ -85,7 +83,16 @@ class EditGroupItemDialog : DialogFragment() {
                     true
                 ) && !time.equals("Vaqti", true) && onEditClick != null
             ) {
-                onEditClick!!.onClick(Guruh(param1?.id,name, mentorID, param1?.ochilganligi, kursID, time))
+                onEditClick!!.onClick(
+                    Guruh(
+                        param1?.id,
+                        name,
+                        mentorID,
+                        param1?.ochilganligi,
+                        kursID,
+                        time
+                    )
+                )
                 dismiss()
             } else {
                 Toast.makeText(root.context, "Bo'sh joylarni to'ldiring!", Toast.LENGTH_SHORT)

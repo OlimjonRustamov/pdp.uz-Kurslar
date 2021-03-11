@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.models.Kurs
-import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.*
 import kotlinx.android.synthetic.main.fragment_barcha_kurslar.view.toolbar
 import kotlinx.android.synthetic.main.fragment_kurshaqida.view.*
 
@@ -19,7 +18,7 @@ private const val ARG_PARAM1 = "kurs"
 class KurshaqidaFragment : Fragment() {
     private var param1: Kurs? = null
 
-    lateinit var root:View
+    lateinit var root: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,11 @@ class KurshaqidaFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         root = inflater.inflate(R.layout.fragment_kurshaqida, container, false)
 
         setToolbar_tv()
@@ -45,9 +48,10 @@ class KurshaqidaFragment : Fragment() {
                 }
             }
     }
+
     private fun setToolbar_tv() {
         root.toolbar.title = param1!!.kurs_nomi
-        root.kurs_haqida_textview.text=param1!!.kurs_haqida
+        root.kurs_haqida_textview.text = param1!!.kurs_haqida
         root.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -55,14 +59,14 @@ class KurshaqidaFragment : Fragment() {
             if (item?.itemId == R.id.add_menu_btn) {
                 val bundle = Bundle()
                 bundle.putSerializable("kurs", param1)
-                findNavController().navigate(R.id.mentorQoshishFragment,bundle)
+                findNavController().navigate(R.id.mentorQoshishFragment, bundle)
             }
             true
         }
         root.kurs_haqida_talaba_qoshish.setOnClickListener {
             val bundle = Bundle()
-            bundle.putSerializable("kurs",param1!!)
-            findNavController().navigate(R.id.talabaQoshishFragment,bundle)
+            bundle.putSerializable("kurs", param1!!)
+            findNavController().navigate(R.id.talabaQoshishFragment, bundle)
         }
     }
 }

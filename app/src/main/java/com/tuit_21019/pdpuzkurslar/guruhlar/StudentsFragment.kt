@@ -11,7 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.StudentsAdapter
 import com.tuit_21019.pdpuzkurslar.models.Guruh
@@ -35,10 +36,13 @@ class GroupItemFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         adapter = StudentsAdapter()
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     lateinit var root: View
-    private var db: DbHelper? = null
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
     private var studentList: ArrayList<Talaba>? = null
     private var adapter: StudentsAdapter? = null
 
@@ -47,7 +51,6 @@ class GroupItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.fragment_group_item, container, false)
-        db = DbHelper(this.requireContext())
         Log.d("AAAA", "groupID: ${group?.id}")
         setToolbar()
         loadDataToView()
@@ -72,15 +75,13 @@ class GroupItemFragment : Fragment() {
                     dialog.setMessage("Rostdan ham guruhga darsni boshlamoqchimisiz?")
                     dialog.setPositiveButton("Ha", object : DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
-                            db?.updateGuruh(
-                                Guruh(
-                                    group?.id,
-                                    group?.guruh_nomi,
-                                    group?.mentor_id,
+                            getDao?.updateGuruh(
+                                    group?.id!!,
+                                group?.guruh_nomi.toString(),
+                                group?.mentor_id!!,
                                     1,
-                                    group?.kurs_id,
-                                    group?.dars_vaqti
-                                )
+                                group?.kurs_id!!,
+                                group?.dars_vaqti!!
                             )
                             p0?.cancel()
                             findNavController().popBackStack()
@@ -107,7 +108,7 @@ class GroupItemFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putSerializable("group_to_student_add", group)
                 bundle.putSerializable("edit_student", talaba)
-                findNavController().navigate(R.id.addStudent,bundle)
+                findNavController().navigate(R.id.addStudent, bundle)
             }
 
         })
@@ -129,9 +130,9 @@ class GroupItemFragment : Fragment() {
                 dialog.setTitle("Talabani o'chirish")
                 dialog.setMessage("Ushbu o'quvchini o'chirmoqchimisiz?")
                 dialog.setPositiveButton("Ha") { p0, p1 ->
-                    db?.deleteTalaba(talaba.id!!)
+                    getDao?.deleteTalaba(talaba.id!!)
                     adapter?.notifyItemRemoved(position)
-                    adapter?.setAdapter(db?.getAllStudentsByGroupId(group?.id!!)!!)
+                    adapter?.setAdapter(getDao?.getAllStudentsByGroupId(group?.id!!) as ArrayList)
                     p0.cancel()
                     Toast.makeText(root.context, "O'chirildi", Toast.LENGTH_SHORT).show()
                 }
@@ -156,8 +157,6 @@ class GroupItemFragment : Fragment() {
         root.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-
     }
 
     private fun loadAdapters() {
@@ -167,13 +166,13 @@ class GroupItemFragment : Fragment() {
 
     private fun loadData() {
         studentList = ArrayList()
-        studentList = db?.getAllStudentsByGroupId(group?.id!!)
+        studentList = getDao?.getAllStudentsByGroupId(group?.id!!) as ArrayList
     }
 
     @SuppressLint("SetTextI18n")
     private fun loadDataToView() {
         root.item_group_name.text = "PDP ${group?.guruh_nomi}"
-        val studentCount = db?.getAllStudentsByGroupId(group?.id!!)?.size
+        val studentCount = getDao?.getAllStudentsByGroupId(group?.id!!)?.size
         root.item_group_student_count.text = "O'quvchilar soni: $studentCount"
         root.item_group_time.text = "Vaqti: ${group?.dars_vaqti}"
 

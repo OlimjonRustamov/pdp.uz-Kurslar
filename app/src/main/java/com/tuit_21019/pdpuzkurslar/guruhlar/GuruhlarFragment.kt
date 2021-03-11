@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.GroupViewPagerAdapter
 import com.tuit_21019.pdpuzkurslar.models.Guruh
@@ -26,7 +26,8 @@ class GuruhlarFragment : Fragment() {
     private var param1: Kurs? = null
 
     lateinit var root: View
-    lateinit var db: DbHelper
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
     private var groupList: ArrayList<Guruh>? = null
     private var adapter: GroupViewPagerAdapter? = null
 
@@ -36,6 +37,8 @@ class GuruhlarFragment : Fragment() {
             param1 = it.getSerializable(ARG_PARAM1) as Kurs
         }
         setHasOptionsMenu(true)
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
@@ -43,7 +46,6 @@ class GuruhlarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = DbHelper(this.context!!)
         root = inflater.inflate(R.layout.fragment_guruhlar, container, false)
         Log.d("AAAA", "KursID: ${param1?.id}")
         setToolBar()
@@ -57,7 +59,7 @@ class GuruhlarFragment : Fragment() {
     }
 
     private fun setToolBar() {
-        root.toolbar.title=param1!!.kurs_nomi
+        root.toolbar.title = param1!!.kurs_nomi
         root.toolbar.menu.getItem(0).isVisible = false
     }
 
@@ -68,11 +70,11 @@ class GuruhlarFragment : Fragment() {
     }
 
     private fun addClick() {
-        root.toolbar.setOnMenuItemClickListener { it->
+        root.toolbar.setOnMenuItemClickListener { it ->
             if (it.itemId == R.id.add_menu_btn) {
                 val bundle = Bundle()
                 bundle.putInt("kursID", param1!!.id!!)
-                findNavController().navigate(R.id.addGroup,bundle)
+                findNavController().navigate(R.id.addGroup, bundle)
             }
             true
         }
@@ -129,8 +131,8 @@ class GuruhlarFragment : Fragment() {
 
     private fun loadData() {
         groupList = ArrayList()
-        groupList!!.addAll(db.getGroupByKursIdAndStatus(1,param1?.id!!))
-        groupList!!.addAll(db.getGroupByKursIdAndStatus(0,param1?.id!!))
+        groupList!!.addAll(getDao!!.getGroupByKursIdAndStatus(1, param1?.id!!))
+        groupList!!.addAll(getDao!!.getGroupByKursIdAndStatus(0, param1?.id!!))
     }
 
     companion object {

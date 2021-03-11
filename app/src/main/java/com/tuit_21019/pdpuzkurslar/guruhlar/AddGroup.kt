@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter
 import com.tuit_21019.pdpuzkurslar.guruhlar.adapters.AddGroupSpinnerAdapter2
 import com.tuit_21019.pdpuzkurslar.models.Guruh
 import kotlinx.android.synthetic.main.fragment_add_group.view.*
-import kotlinx.android.synthetic.main.fragment_add_group.view.toolbar
-import kotlinx.android.synthetic.main.fragment_guruhlar.view.*
 
 private const val ARG_PARAM1 = "kursID"
 private const val ARG_PARAM2 = "param2"
@@ -33,13 +32,15 @@ class AddGroup : Fragment() {
             param1 = it.getInt(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        db = DbHelper(this.context!!)
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     lateinit var root: View
     private var mentors: ArrayList<String>? = null
     private var time: ArrayList<String>? = null
-    private var db: DbHelper? = null
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
     private var spinnerAdapter: AddGroupSpinnerAdapter? = null
     private var spinnerAdapter2: AddGroupSpinnerAdapter2? = null
 
@@ -68,25 +69,29 @@ class AddGroup : Fragment() {
 
     private fun onSaveClick() {
         root.add_group_save.setOnClickListener {
-            var courseName = root.add_group_course_name.text.toString()
-            var mentor = mentors!![root.add_group_add_mentor.selectedItemPosition]
-            var time = time!![root.add_group_add_time.selectedItemPosition]
+            val courseName = root.add_group_course_name.text.toString()
+            val mentor = mentors!![root.add_group_add_mentor.selectedItemPosition]
+            val time = time!![root.add_group_add_time.selectedItemPosition]
             var mentorID = 0
 
-            if (courseName.isNotEmpty() && !mentor.equals("Mentorni tanlang",true) && !time.equals("Vaqti", true)) {
-                for (i in 0 until db?.getAllMentorsByKursId(param1!!)!!.size) {
+            if (courseName.isNotEmpty() && !mentor.equals("Mentorni tanlang", true) && !time.equals(
+                    "Vaqti",
+                    true
+                )
+            ) {
+                for (i in 0 until getDao?.getAllMentorsByKursId(param1!!)!!.size) {
                     if (mentor.equals(
-                            db!!.getAllMentorsByKursId(param1!!)[i].mentor_familyasi + " " + db!!.getAllMentorsByKursId(
+                            getDao!!.getAllMentorsByKursId(param1!!)[i].mentor_familyasi + " " + getDao!!.getAllMentorsByKursId(
                                 param1!!
                             )[i].mentor_nomi, true
                         )
                     ) {
-                        mentorID = db!!.getAllMentorsByKursId(param1!!)[i].id!!
+                        mentorID = getDao!!.getAllMentorsByKursId(param1!!)[i].id!!
                         break
                     }
                 }
 
-                db?.insertGuruh(Guruh(courseName, mentorID, 0, param1, time))
+                getDao?.insertGuruh(Guruh(courseName, mentorID, 0, param1, time))
                 findNavController().popBackStack()
                 Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_LONG).show()
             } else {
@@ -112,9 +117,9 @@ class AddGroup : Fragment() {
         mentors = ArrayList()
         time = ArrayList()
         mentors!!.add("Mentorni tanlang")
-        for (i in 0 until db?.getAllMentorsByKursId(param1!!)!!.size) {
+        for (i in 0 until getDao?.getAllMentorsByKursId(param1!!)!!.size) {
             mentors?.add(
-                db?.getAllMentorsByKursId(param1!!)!![i].mentor_familyasi + " " + db?.getAllMentorsByKursId(
+                getDao?.getAllMentorsByKursId(param1!!)!![i].mentor_familyasi + " " + getDao?.getAllMentorsByKursId(
                     param1!!
                 )!![i].mentor_nomi
             )

@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.tuit_21019.pdpuzkurslar.DataBase.DbHelper
+import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
+import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
 import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.adapters.MentorAdapter
 import com.tuit_21019.pdpuzkurslar.models.Kurs
@@ -25,15 +26,18 @@ private const val ARG_PARAM1 = "kurs"
 class MentorlarFragment : Fragment() {
     private var param1: Kurs? = null
 
-    lateinit var db: DbHelper
+
+    private var database: AppDatabase? = null
+    private var getDao: DbMethods? = null
     lateinit var root: View
     lateinit var mentorAdapter: MentorAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getSerializable(ARG_PARAM1) as Kurs
-
         }
+        database = AppDatabase.get.getDatabase()
+        getDao = database!!.getDao()
     }
 
     override fun onCreateView(
@@ -41,11 +45,10 @@ class MentorlarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.fragment_mentorlar, container, false)
-        db = DbHelper(root.context)
 
         setToolbar()
 
-        mentorAdapter = MentorAdapter(db.getAllMentorsByKursId(param1!!.id!!))
+        mentorAdapter = MentorAdapter(getDao!!.getAllMentorsByKursId(param1!!.id!!) as ArrayList)
         root.mentorlar_recyclerview.layoutManager = LinearLayoutManager(root.context)
         root.mentorlar_recyclerview.adapter = mentorAdapter
 
@@ -103,7 +106,7 @@ class MentorlarFragment : Fragment() {
                         mentor.mentor_familyasi = view.edit_mentor_familyasi_et.text.toString()
                         mentor.mentor_otasining_ismi =
                             view.edit_mentor_otasining_ismi_et.text.toString()
-                        db.updateMentor(mentor)
+                        getDao?.updateMentor(mentor)
                         Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_LONG).show()
                         mentorAdapter.notifyItemChanged(position)
                         dialog!!.cancel()
@@ -116,20 +119,24 @@ class MentorlarFragment : Fragment() {
         mentorAdapter.onDeleteClick = object : MentorAdapter.OnDeleteClick {
             override fun deleteClick(mentor: Mentor, position: Int) {
 
-                if (db.getAllStudentsByMentorId(mentor.id!!).size == 0 && db.getAllGroupsByMentorId(mentor.id!!).size==0) {
+                if (getDao?.getAllStudentsByMentorId(mentor.id!!)!!
+                        .isEmpty() && getDao?.getAllGroupsByMentorId(mentor.id!!)?.size == 0
+                ) {
                     val dialog = AlertDialog.Builder(root.context)
                     dialog.setTitle("Mentorni o'chirish")
                     dialog.setMessage("Diqqat! Ushbu mentorga tegishli barcha ma'lumotlar o'chirib yuboriladi!")
                     dialog.setNegativeButton("Bekor qilish") { dialog, which -> dialog?.cancel() }
                     dialog.setPositiveButton("O'chirish") { dialog, which ->
-                        db.deleteMentor(mentor)
+                        getDao?.deleteMentor(mentor)
                         mentorAdapter.notifyItemRemoved(position)
-                        mentorAdapter.mentorList = db.getAllMentorsByKursId(param1!!.id!!)
+                        mentorAdapter.mentorList =
+                            getDao?.getAllMentorsByKursId(param1!!.id!!) as ArrayList
                         dialog!!.cancel()
                     }
                     dialog.show()
                 } else {
-                    Snackbar.make(root,"Ushbu mentorni o'chirib bo'lmaydi!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(root, "Ushbu mentorni o'chirib bo'lmaydi!", Snackbar.LENGTH_LONG)
+                        .show()
                 }
             }
         }
