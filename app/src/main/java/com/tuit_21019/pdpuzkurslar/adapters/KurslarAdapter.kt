@@ -8,9 +8,14 @@ import com.tuit_21019.pdpuzkurslar.R
 import com.tuit_21019.pdpuzkurslar.models.Kurs
 import kotlinx.android.synthetic.main.item_kurslar.view.*
 
-class KurslarAdapter(var kurslarList: ArrayList<Kurs>) : RecyclerView.Adapter<KurslarAdapter.Vh>() {
+class KurslarAdapter() : RecyclerView.Adapter<KurslarAdapter.Vh>() {
     var kursItemClick: KursItemClick? = null
 
+    private var kurslarList: ArrayList<Kurs>? = null
+
+    fun setAdapter(kurslarList: ArrayList<Kurs>) {
+        this.kurslarList = kurslarList
+    }
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun myBind(kurs: Kurs) {
@@ -29,10 +34,10 @@ class KurslarAdapter(var kurslarList: ArrayList<Kurs>) : RecyclerView.Adapter<Ku
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.myBind(kurslarList[position])
+        holder.myBind(kurslarList!![position])
     }
 
-    override fun getItemCount(): Int = kurslarList.size
+    override fun getItemCount(): Int = kurslarList!!.size
 
     interface KursItemClick {
         fun kursitemClick(kurs: Kurs)

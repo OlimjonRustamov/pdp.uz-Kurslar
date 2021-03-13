@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.tuit_21019.pdpuzkurslar.DataBase.AppDatabase
 import com.tuit_21019.pdpuzkurslar.DataBase.DbMethods
@@ -31,7 +29,7 @@ class Barcha_kurslarFragment : Fragment() {
     private var getDao: DbMethods? = null
 
     lateinit var root: View
-    lateinit var kurslarAdapter: KurslarAdapter
+    private var kurslarAdapter: KurslarAdapter? = null
     lateinit var kurslarList: ArrayList<Kurs>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +39,7 @@ class Barcha_kurslarFragment : Fragment() {
         }
         database = AppDatabase.get.getDatabase()
         getDao = database!!.getDao()
+        kurslarAdapter = KurslarAdapter()
     }
 
     override fun onCreateView(
@@ -56,19 +55,28 @@ class Barcha_kurslarFragment : Fragment() {
         setToolbar()
         loadData()
 
-
         setMyItemClick()
 
         return root
     }
 
+    private fun checkCource(courceName: String): Boolean {
+        var exists = false
+        for (i in getDao?.getAllKurs()!!.indices) {
+            exists = courceName.equals(getDao?.getAllKurs()!![i].kurs_nomi!!, true)
+            if (exists) {
+                break
+            }
+        }
+        return exists
+    }
+
     private fun loadData() {
         kurslarList = ArrayList()
         kurslarList = getDao?.getAllKurs() as ArrayList
-
-        kurslarAdapter = KurslarAdapter(kurslarList)
+        kurslarAdapter?.setAdapter(kurslarList)
         root.kurslar_recyclerview.adapter = kurslarAdapter
-        root.kurslar_recyclerview.layoutManager = LinearLayoutManager(root.context)
+        kurslarAdapter?.notifyDataSetChanged()
     }
 
     companion object {
@@ -105,21 +113,28 @@ class Barcha_kurslarFragment : Fragment() {
                         val kurs_nomi_et = view.add_kurs_dialog_et.text.toString()
                         val kurs_haqida_et = view.add_kurs_dialog__description.text.toString()
                         if (kurs_nomi_et.trim() != "" && kurs_haqida_et.trim() != "") {
-                            getDao?.insertKurs(Kurs(kurs_nomi_et, kurs_haqida_et))
-                            dialog?.cancel()
-                            Snackbar.make(root, "Muvaffaqiyatli qo'shildi!", Snackbar.LENGTH_LONG)
-                                .show()
-                            loadData()
-                            kurslarAdapter.notifyItemInserted(kurslarList.size - 1)
-                            kurslarAdapter.notifyItemRangeChanged(
-                                kurslarList.size - 1,
-                                kurslarList.size
-                            )
+                            if (!checkCource(kurs_nomi_et)) {
+                                getDao?.insertKurs(Kurs(kurs_nomi_et, kurs_haqida_et))
+                                dialog?.cancel()
+                                Snackbar.make(
+                                    root,
+                                    "Muvaffaqiyatli qo'shildi!",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                    .show()
+                                loadData()
+                            } else {
+                                Snackbar.make(
+                                    root,
+                                    "$kurs_nomi_et nomli kurs mavjud",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
                         } else {
-                            Toast.makeText(
-                                root.context,
+                            Snackbar.make(
+                                root,
                                 "Barcha maydonlarni to'ldiring",
-                                Toast.LENGTH_LONG
+                                Snackbar.LENGTH_LONG
                             ).show()
                         }
                     }
@@ -136,7 +151,7 @@ class Barcha_kurslarFragment : Fragment() {
     }
 
     private fun setMyItemClick() {
-        kurslarAdapter.kursItemClick = object : KurslarAdapter.KursItemClick {
+        kurslarAdapter!!.kursItemClick = object : KurslarAdapter.KursItemClick {
             override fun kursitemClick(kurs: Kurs) {
                 val bundle = Bundle()
                 bundle.putSerializable("kurs", kurs)
