@@ -19,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
 
 class MentorQoshishFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: Kurs? = null
+    private var kurs: Kurs? = null
 //    private var param2: String? = null
 
     lateinit var root: View
@@ -29,7 +29,7 @@ class MentorQoshishFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getSerializable(ARG_PARAM1) as Kurs
+            kurs = it.getSerializable(ARG_PARAM1) as Kurs
 //            param2 = it.getString(ARG_PARAM2)
         }
         database = AppDatabase.get.getDatabase()
@@ -43,16 +43,29 @@ class MentorQoshishFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_mentor_qoshish, container, false)
         setToolbar()
         setClickBtn()
-
         return root
+    }
+
+    private fun checkMentorName(mentorName: String): Boolean {
+        var exist = false
+        for (i in 0 until getDao!!.getAllMentorsByKursId(kurs?.id!!).size) {
+            if ((getDao!!.getAllMentorsByKursId(kurs?.id!!)[i].mentor_nomi + " " + getDao!!.getAllMentorsByKursId(
+                    kurs?.id!!
+                )[i].mentor_familyasi).equals(mentorName, true)
+            ) {
+                exist = true
+                break
+            }
+        }
+        return exist
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(kurs: String, param2: String) =
             MentorQoshishFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_PARAM1, param1)
+                    putSerializable(ARG_PARAM1, kurs)
 //                        putString(ARG_PARAM2, param2)
                 }
             }
@@ -64,16 +77,24 @@ class MentorQoshishFragment : Fragment() {
             val mentor_familyasi = root.add_mentor_familyasi_et.text.toString().trim()
             val mentor_otasining_ismi = root.add_mentor_otasining_ismi_et.text.toString().trim()
             if (mentor_ismi.isNotEmpty() && mentor_familyasi.isNotEmpty() && mentor_otasining_ismi.isNotEmpty()) {
-                getDao?.insertMentor(
-                    Mentor(
-                        mentor_ismi,
-                        mentor_familyasi,
-                        mentor_otasining_ismi,
-                        param1!!.id
+                if (!checkMentorName(mentor_ismi + " " + mentor_familyasi)) {
+                    getDao?.insertMentor(
+                        Mentor(
+                            mentor_ismi,
+                            mentor_familyasi,
+                            mentor_otasining_ismi,
+                            kurs!!.id
+                        )
                     )
-                )
-                Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_LONG).show()
-                findNavController().popBackStack()
+                    Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_LONG).show()
+                    findNavController().popBackStack()
+                } else {
+                    Snackbar.make(
+                        root,
+                        "$mentor_ismi $mentor_familyasi nomli mentor mavjud",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             } else Snackbar.make(root, "Barcha maydonlarni to'ldiring!", Snackbar.LENGTH_LONG)
                 .show()
 

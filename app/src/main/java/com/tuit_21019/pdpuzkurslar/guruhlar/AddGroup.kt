@@ -22,14 +22,14 @@ private const val ARG_PARAM2 = "param2"
 
 class AddGroup : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: Int? = null
+    private var kursID: Int? = null
     private var param2: String? = null
 
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getInt(ARG_PARAM1)
+            kursID = it.getInt(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
         database = AppDatabase.get.getDatabase()
@@ -56,11 +56,23 @@ class AddGroup : Fragment() {
         loadTime()
         onSaveClick()
 
-
         return root
     }
 
+    private fun checkGroupName(groupName: String): Boolean {
+        // bir xil guruh nomi bo'lmasligini tekshirish
+        var exist = false
+        for (i in 0 until getDao!!.getAllGroupsByKursId(kursID!!).size) {
+            if (getDao!!.getAllGroupsByKursId(kursID!!)[i].guruh_nomi.equals(groupName, true)) {
+                exist = true
+                break
+            }
+        }
+        return exist
+    }
+
     private fun toolbarConfiguration() {
+        // back button
         root.toolbar.menu.getItem(0).isVisible = false
         root.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -79,21 +91,27 @@ class AddGroup : Fragment() {
                     true
                 )
             ) {
-                for (i in 0 until getDao?.getAllMentorsByKursId(param1!!)!!.size) {
-                    if (mentor.equals(
-                            getDao!!.getAllMentorsByKursId(param1!!)[i].mentor_familyasi + " " + getDao!!.getAllMentorsByKursId(
-                                param1!!
-                            )[i].mentor_nomi, true
-                        )
-                    ) {
-                        mentorID = getDao!!.getAllMentorsByKursId(param1!!)[i].id!!
-                        break
+                if (!checkGroupName(courseName)) {
+                    // bir xil nomli guruh yo'qligini tekshirish
+                    for (i in 0 until getDao?.getAllMentorsByKursId(kursID!!)!!.size) {
+                        //mentorID ni olish
+                        if (mentor.equals(
+                                getDao!!.getAllMentorsByKursId(kursID!!)[i].mentor_familyasi + " " + getDao!!.getAllMentorsByKursId(
+                                    kursID!!
+                                )[i].mentor_nomi, true
+                            )
+                        ) {
+                            mentorID = getDao!!.getAllMentorsByKursId(kursID!!)[i].id!!
+                            break
+                        }
                     }
-                }
 
-                getDao?.insertGuruh(Guruh(courseName, mentorID, 0, param1, time))
-                findNavController().popBackStack()
-                Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_LONG).show()
+                    getDao?.insertGuruh(Guruh(courseName, mentorID, 0, kursID, time))
+                    findNavController().popBackStack()
+                    Snackbar.make(root, "Muvaffaqiyatli qo'shildi", Snackbar.LENGTH_LONG).show()
+                } else {
+                    Snackbar.make(root,"$courseName nomli guruh mavjud",Snackbar.LENGTH_LONG).show()
+                }
             } else {
                 Snackbar.make(root, "Barcha maydonlarni to'ldiring!", Snackbar.LENGTH_LONG)
                     .show()
@@ -117,10 +135,10 @@ class AddGroup : Fragment() {
         mentors = ArrayList()
         time = ArrayList()
         mentors!!.add("Mentorni tanlang")
-        for (i in 0 until getDao?.getAllMentorsByKursId(param1!!)!!.size) {
+        for (i in 0 until getDao?.getAllMentorsByKursId(kursID!!)!!.size) {
             mentors?.add(
-                getDao?.getAllMentorsByKursId(param1!!)!![i].mentor_familyasi + " " + getDao?.getAllMentorsByKursId(
-                    param1!!
+                getDao?.getAllMentorsByKursId(kursID!!)!![i].mentor_familyasi + " " + getDao?.getAllMentorsByKursId(
+                    kursID!!
                 )!![i].mentor_nomi
             )
         }
@@ -131,10 +149,10 @@ class AddGroup : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: Int, param2: String) =
+        fun newInstance(kursID: Int, param2: String) =
             AddGroup().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_PARAM1, param1)
+                    putInt(ARG_PARAM1, kursID)
                     putString(ARG_PARAM2, param2)
                 }
             }
